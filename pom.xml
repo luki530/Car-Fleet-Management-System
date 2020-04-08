@@ -9,7 +9,7 @@
 		<relativePath/>
 	</parent>
 	<groupId>com.comapny</groupId>
-	<artifactId>CarFleetManagementSystem</artifactId>
+	<artifactId>Car-Fleet-Management-System</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Project</name>
 	<description>Registration</description>
