@@ -18,15 +18,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
-import pl.com.carfleetmanagementsystem.models.ConfirmationToken;
-import pl.com.carfleetmanagementsystem.models.ERole;
-import pl.com.carfleetmanagementsystem.models.Role;
-import pl.com.carfleetmanagementsystem.models.User;
+import pl.com.carfleetmanagementsystem.http.request.ChangePasswordRequest;
+import pl.com.carfleetmanagementsystem.http.request.ResetPasswordRequest;
+import pl.com.carfleetmanagementsystem.models.*;
 import pl.com.carfleetmanagementsystem.http.request.LoginRequest;
 import pl.com.carfleetmanagementsystem.http.request.SignupRequest;
 import pl.com.carfleetmanagementsystem.http.response.JwtResponse;
 import pl.com.carfleetmanagementsystem.http.response.MessageResponse;
 import pl.com.carfleetmanagementsystem.repository.ConfirmationTokenRepository;
+import pl.com.carfleetmanagementsystem.repository.PasswordResetTokenRepository;
 import pl.com.carfleetmanagementsystem.repository.RoleRepository;
 import pl.com.carfleetmanagementsystem.repository.UserRepository;
 import pl.com.carfleetmanagementsystem.security.jwt.JwtUtils;
@@ -48,6 +48,9 @@ public class AuthController {
 
     @Autowired
     private ConfirmationTokenRepository confirmationTokenRepository;
+
+    @Autowired
+    private PasswordResetTokenRepository passwordResetTokenRepository;
 
     @Autowired
     private EmailSenderService emailSenderService;
@@ -150,7 +153,7 @@ public class AuthController {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Complete Registration!");
-        mailMessage.setFrom("chand312902@gmail.com");
+        mailMessage.setFrom("carfleetmanagementsystem@gmail.com");
         mailMessage.setText("To confirm your account, please click here : "
                 + "http://localhost:8080/auth/confirm-account?token=" + confirmationToken.getConfirmationToken());
 
@@ -167,10 +170,48 @@ public class AuthController {
             User user = userRepository.findByEmailIgnoreCase(token.getUser().getEmail()).get();
             user.setEnabled(true);
             userRepository.save(user);
+            confirmationTokenRepository.deleteByConfirmationToken(confirmationToken);
             return ResponseEntity.ok(new MessageResponse("Account verified!"));
         } else {
             return ResponseEntity.badRequest().body(new MessageResponse("Something went wrong!"));
         }
 
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@Valid @RequestBody ResetPasswordRequest resetPasswordRequest) {
+        if (userRepository.existsByUsername(resetPasswordRequest.getUsername())) {
+
+            User user = userRepository.findByUsername(resetPasswordRequest.getUsername()).orElseThrow(() -> new RuntimeException("User not found !"));
+
+            PasswordResetToken passwordResetToken = new PasswordResetToken(user);
+
+            passwordResetTokenRepository.save(passwordResetToken);
+
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(user.getEmail());
+            mailMessage.setSubject("Reset your password!");
+            mailMessage.setFrom("carfleetmanagementsystem@gmail.com");
+            mailMessage.setText("To reset your password, please click here : "
+                    + "http://localhost:8080/auth/change-password?token=" + passwordResetToken.getPasswordResetToken());
+            emailSenderService.sendEmail(mailMessage);
+            return ResponseEntity.ok(new MessageResponse("Email for password reset has been sent to your email! "));
+        }
+        return ResponseEntity.badRequest().body(new MessageResponse("User not found!"));
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
+        PasswordResetToken token = passwordResetTokenRepository.findByPasswordResetToken(changePasswordRequest.getPasswordResetToken());
+
+        if (token != null) {
+            User user = userRepository.findByEmailIgnoreCase(token.getUser().getEmail()).get();
+            user.setPassword(encoder.encode(changePasswordRequest.getNewPassword()));
+            userRepository.save(user);
+            passwordResetTokenRepository.delete(token);
+            return ResponseEntity.ok(new MessageResponse("Password changed!"));
+        } else {
+            return ResponseEntity.badRequest().body(new MessageResponse("Something went wrong!"));
+        }
     }
 }

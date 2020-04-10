@@ -1,0 +1,28 @@
+api:
+
+/auth/signup
+    {
+    "username" : "nazwa_uzytkownika",
+    "password" : "haslo",
+    "email" : "adres_email",
+    "role" : ["rola", "rola2"...]
+    }
+
+/auth/signin
+    {
+    "username" : "nazwa_uzytkownika",
+    "password" : "haslo",
+    }
+
+/auth/confirm-account?token="token"
+
+/auth/reset-password
+    {
+    "username" : "nazwa_uzytkownika"
+    }
+
+/auth/change-password
+    {
+    "passwordResetToken" : "token",
+    "newPassword" : "nowe_haslo"
+    }

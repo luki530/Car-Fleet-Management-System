@@ -5,4 +5,6 @@ import pl.com.carfleetmanagementsystem.models.ConfirmationToken;
 
 public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationToken, Long> {
     ConfirmationToken findByConfirmationToken(String confirmationToken);
+
+    void deleteByConfirmationToken(String confirmationToken);
 }
