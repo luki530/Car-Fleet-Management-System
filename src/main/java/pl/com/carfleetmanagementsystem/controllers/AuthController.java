@@ -79,6 +79,8 @@ public class AuthController {
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
+                userDetails.getName(),
+                userDetails.getPhoneNumber(),
                 roles));
     }
 
@@ -96,10 +98,27 @@ public class AuthController {
                     .body(new MessageResponse("Error: Email is already in use!"));
         }
 
+        String regexp = "(\\+48|0)[0-9]{9}";
+
+        if(!signUpRequest.getPhoneNumber().matches(regexp)){
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Wrong phone number!"));
+        }
+
+        if(!signUpRequest.getPassword().equals(signUpRequest.getConfirmPassword())){
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Passwords are not the same!"));
+        }
+
         // Create new user's account
-        User user = new User(signUpRequest.getUsername(),
+        User user = new User(signUpRequest.getName(),
+                signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()), false);
+                signUpRequest.getPhoneNumber(),
+                encoder.encode(signUpRequest.getPassword()),
+                false);
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();

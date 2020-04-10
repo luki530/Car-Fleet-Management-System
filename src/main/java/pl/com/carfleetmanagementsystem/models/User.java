@@ -9,92 +9,113 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(	name = "users", 
-		uniqueConstraints = { 
-			@UniqueConstraint(columnNames = "username"),
-			@UniqueConstraint(columnNames = "email") 
-		})
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "email")})
 public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
-	@NotBlank
-	@Size(max = 20)
-	private String username;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@NotBlank
-	@Size(max = 50)
-	@Email
-	private String email;
+    @NotBlank
+    @Size(max = 20)
+    private String username;
 
-	@NotBlank
-	@Size(max = 120)
-	private String password;
+    @NotBlank
+    @Size(max = 50)
+    @Email
+    private String email;
 
-	private boolean isEnabled;
+    @NotBlank
+    @Size(max = 120)
+    private String password;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(	name = "user_roles", 
-				joinColumns = @JoinColumn(name = "user_id"), 
-				inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>();
+    @NotBlank
+    @Size(max = 12)
+    private String phoneNumber;
 
-	public User() {
-	}
+    @NotBlank
+    @Size(max = 20)
+    private String name;
 
-	public User(String username, String email, String password, boolean isEnabled) {
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.isEnabled = isEnabled;
-	}
+    private boolean isEnabled;
 
-	public Long getId() {
-		return id;
-	}
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public User() {
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public User(String name, String username, String email,String phoneNumber, String password, boolean isEnabled) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.isEnabled = isEnabled;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public Set<Role> getRoles() {
-		return roles;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public boolean isEnabled() {
-		return isEnabled;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setEnabled(boolean enabled) {
-		isEnabled = enabled;
-	}
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }
