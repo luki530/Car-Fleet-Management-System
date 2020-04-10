@@ -76,6 +76,8 @@ public class AuthController {
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
+                userDetails.getName(),
+                userDetails.getPhoneNumber(),
                 roles));
     }
 
@@ -87,6 +89,12 @@ public class AuthController {
                     .body(new MessageResponse("Error: Username is already taken!"));
         }
 
+        if(!signUpRequest.getPassword().equals(signUpRequest.getConfirmPassword())){
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Passwords are not the same!"));
+        }
+
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
@@ -96,7 +104,18 @@ public class AuthController {
         // Create new user's account
         User user = new User(signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()), false);
+                encoder.encode(signUpRequest.getPassword()),
+                signUpRequest.getPhoneNumber(),
+                signUpRequest.getName(),
+                false);
+
+        String regexp = "(\\+48|0)[0-9]{9}";
+
+        if(!signUpRequest.getPhoneNumber().matches(regexp)){
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Wrong phone number!"));
+        }
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
