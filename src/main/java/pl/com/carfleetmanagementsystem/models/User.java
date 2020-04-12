@@ -37,7 +37,9 @@ public class User {
     @Size(max = 20)
     private String name;
 
-    private boolean isEnabled;
+    private boolean emailConfirmed = false;
+
+    private boolean phoneNumberConfirmed = false;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -46,13 +48,12 @@ public class User {
     public User() {
     }
 
-    public User(String name, String username, String email,String phoneNumber, String password, boolean isEnabled) {
+    public User(String name, String username, String email, String phoneNumber, String password) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
-        this.isEnabled = isEnabled;
     }
 
     public Long getId() {
@@ -95,14 +96,6 @@ public class User {
         this.roles = roles;
     }
 
-    public boolean isEnabled() {
-        return isEnabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        isEnabled = enabled;
-    }
-
     public String getName() {
         return name;
     }
@@ -117,5 +110,21 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public boolean isEmailConfirmed() {
+        return emailConfirmed;
+    }
+
+    public void setEmailConfirmed(boolean emailConfirmed) {
+        this.emailConfirmed = emailConfirmed;
+    }
+
+    public boolean isPhoneNumberConfirmed() {
+        return phoneNumberConfirmed;
+    }
+
+    public void setPhoneNumberConfirmed(boolean phoneNumberConfirmed) {
+        this.phoneNumberConfirmed = phoneNumberConfirmed;
     }
 }

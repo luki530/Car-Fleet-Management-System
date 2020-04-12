@@ -26,3 +26,5 @@ api:
     "passwordResetToken" : "token",
     "newPassword" : "nowe_haslo"
     }
+/auth/confirm-email?token="TOKEN"
+/auth/confirm-phone-number?code="CODE"

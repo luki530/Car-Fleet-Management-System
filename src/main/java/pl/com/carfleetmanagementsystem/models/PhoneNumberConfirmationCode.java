@@ -1,16 +1,20 @@
 package pl.com.carfleetmanagementsystem.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.Random;
 import java.util.UUID;
 
 @Entity
-public class ConfirmationToken {
+public class PhoneNumberConfirmationCode {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String confirmationToken;
+
+    @NotBlank
+    private String confirmationCode;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -18,15 +22,13 @@ public class ConfirmationToken {
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User user;
 
-
-    public ConfirmationToken() {
+    public PhoneNumberConfirmationCode() {
     }
 
-
-    public ConfirmationToken(User user) {
+    public PhoneNumberConfirmationCode(User user) {
         this.user = user;
         createdDate = new Date();
-        confirmationToken = UUID.randomUUID().toString();
+        confirmationCode = String.valueOf(new Random().nextInt(10000));
     }
 
     public long getId() {
@@ -37,12 +39,12 @@ public class ConfirmationToken {
         this.id = id;
     }
 
-    public String getConfirmationToken() {
-        return confirmationToken;
+    public String getConfirmationCode() {
+        return confirmationCode;
     }
 
-    public void setConfirmationToken(String confirmationToken) {
-        this.confirmationToken = confirmationToken;
+    public void setConfirmationCode(String confirmationCode) {
+        this.confirmationCode = confirmationCode;
     }
 
     public Date getCreatedDate() {
@@ -60,5 +62,4 @@ public class ConfirmationToken {
     public void setUser(User user) {
         this.user = user;
     }
-
 }

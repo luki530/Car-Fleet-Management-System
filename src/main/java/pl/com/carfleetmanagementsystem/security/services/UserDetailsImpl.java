@@ -13,111 +13,115 @@ import pl.com.carfleetmanagementsystem.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UserDetailsImpl implements UserDetails {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Long id;
+    private Long id;
 
-	private String username;
+    private String username;
 
-	private String email;
+    private String email;
 
-	private String phoneNumber;
+    private String phoneNumber;
 
-	private String name;
+    private String name;
 
-	private boolean isEnabled;
+    private boolean emailConfirmed;
 
-	@JsonIgnore
-	private String password;
+    private boolean phoneNumberConfirmed;
 
-	private Collection<? extends GrantedAuthority> authorities;
+    @JsonIgnore
+    private String password;
 
-	public UserDetailsImpl(Long id,String name, String username, String email, String phoneNumber, String password, boolean isEnabled,
-			Collection<? extends GrantedAuthority> authorities) {
-		this.id = id;
-		this.name = name;
-		this.username = username;
-		this.email = email;
-		this.phoneNumber = phoneNumber;
-		this.password = password;
-		this.isEnabled = isEnabled;
-		this.authorities = authorities;
-	}
+    private Collection<? extends GrantedAuthority> authorities;
 
-	public static UserDetailsImpl build(User user) {
-		List<GrantedAuthority> authorities = user.getRoles().stream()
-				.map(role -> new SimpleGrantedAuthority(role.getName().name()))
-				.collect(Collectors.toList());
+    public UserDetailsImpl(Long id, String name, String username, String email, String phoneNumber, String password, boolean emailConfirmed, boolean phoneNumberConfirmed,
+                           Collection<? extends GrantedAuthority> authorities) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.emailConfirmed = emailConfirmed;
+        this.phoneNumberConfirmed = phoneNumberConfirmed;
+        this.authorities = authorities;
+    }
 
-		return new UserDetailsImpl(
-				user.getId(),
-				user.getName(),
-				user.getUsername(), 
-				user.getEmail(),
-				user.getPhoneNumber(),
-				user.getPassword(),
-				user.isEnabled(),
-				authorities);
-	}
+    public static UserDetailsImpl build(User user) {
+        List<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                .collect(Collectors.toList());
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return authorities;
-	}
+        return new UserDetailsImpl(
+                user.getId(),
+                user.getName(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getPhoneNumber(),
+                user.getPassword(),
+                user.isEmailConfirmed(),
+                user.isPhoneNumberConfirmed(),
+                authorities);
+    }
 
-	public Long getId() {
-		return id;
-	}
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	@Override
-	public String getPassword() {
-		return password;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	@Override
-	public String getUsername() {
-		return username;
-	}
+    @Override
+    public String getPassword() {
+        return password;
+    }
 
-	public String getName() {
-		return name;
-	}
+    @Override
+    public String getUsername() {
+        return username;
+    }
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
+    public String getName() {
+        return name;
+    }
 
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return this.isEnabled;
-	}
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		UserDetailsImpl user = (UserDetailsImpl) o;
-		return Objects.equals(id, user.id);
-	}
+    @Override
+    public boolean isEnabled() {
+        return this.emailConfirmed && this.phoneNumberConfirmed;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        UserDetailsImpl user = (UserDetailsImpl) o;
+        return Objects.equals(id, user.id);
+    }
 }
