@@ -191,14 +191,14 @@ public class AuthController {
         mailMessage.setSubject("Complete Registration!");
         mailMessage.setFrom("carfleetmanagementsystem@gmail.com");
         mailMessage.setText("To confirm your email, please click here : "
-                + "http://localhost:8080/auth/confirm-email?token=" + emailConfirmationToken.getConfirmationToken());
+                + "http://localhost:4200/confirmemail?token=" + emailConfirmationToken.getConfirmationToken());
         emailSenderService.sendEmail(mailMessage);
 
-        Constants.JUSTSEND_API_URL = "https://justsend.pl/api/rest";
-        PhoneNumberConfirmationCode phoneNumberConfirmationCode = new PhoneNumberConfirmationCode(user);
-        phoneNumberConfirmationCodeRepository.save(phoneNumberConfirmationCode);
-
-        messageService.sendMessage(user.getPhoneNumber(), "CFMS", "Your phone confirmation code: " + phoneNumberConfirmationCode.getConfirmationCode(), PRO);
+//        Constants.JUSTSEND_API_URL = "https://justsend.pl/api/rest";
+//        PhoneNumberConfirmationCode phoneNumberConfirmationCode = new PhoneNumberConfirmationCode(user);
+//        phoneNumberConfirmationCodeRepository.save(phoneNumberConfirmationCode);
+//
+//        messageService.sendMessage(user.getPhoneNumber(), "CFMS", "Your phone confirmation code: " + phoneNumberConfirmationCode.getConfirmationCode(), PRO);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
