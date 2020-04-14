@@ -31,7 +31,6 @@ import pl.com.carfleetmanagementsystem.security.services.EmailSenderService;
 import pl.com.carfleetmanagementsystem.security.services.UserDetailsImpl;
 import pl.digitalvirgo.justsend.api.client.services.impl.Constants;
 import pl.digitalvirgo.justsend.api.client.services.impl.MessageServiceImpl;
-import pl.digitalvirgo.justsend.api.client.services.impl.http.JustsendHttpClient;
 import pl.digitalvirgo.justsend.api.client.services.impl.services.MessageService;
 
 import static pl.digitalvirgo.justsend.api.client.services.impl.enums.BulkVariant.PRO;
@@ -194,11 +193,11 @@ public class AuthController {
                 + "http://localhost:4200/confirmemail?token=" + emailConfirmationToken.getConfirmationToken());
         emailSenderService.sendEmail(mailMessage);
 
-//        Constants.JUSTSEND_API_URL = "https://justsend.pl/api/rest";
-//        PhoneNumberConfirmationCode phoneNumberConfirmationCode = new PhoneNumberConfirmationCode(user);
-//        phoneNumberConfirmationCodeRepository.save(phoneNumberConfirmationCode);
-//
-//        messageService.sendMessage(user.getPhoneNumber(), "CFMS", "Your phone confirmation code: " + phoneNumberConfirmationCode.getConfirmationCode(), PRO);
+        Constants.JUSTSEND_API_URL = "https://justsend.pl/api/rest";
+        PhoneNumberConfirmationCode phoneNumberConfirmationCode = new PhoneNumberConfirmationCode(user);
+        phoneNumberConfirmationCodeRepository.save(phoneNumberConfirmationCode);
+
+        messageService.sendMessage(user.getPhoneNumber(), "CFMS", "Your phone confirmation code: " + phoneNumberConfirmationCode.getConfirmationCode(), PRO);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
@@ -252,7 +251,7 @@ public class AuthController {
             mailMessage.setSubject("Reset your password!");
             mailMessage.setFrom("carfleetmanagementsystem@gmail.com");
             mailMessage.setText("To reset your password, please click here : "
-                    + "http://localhost:8080/auth/change-password?token=" + passwordResetToken.getPasswordResetToken());
+                    + "http://localhost:4200/changepassword?token=" + passwordResetToken.getPasswordResetToken());
             emailSenderService.sendEmail(mailMessage);
             return ResponseEntity.ok(new MessageResponse("Email for password reset has been sent to your email! "));
         }
@@ -260,9 +259,15 @@ public class AuthController {
     }
 
     @Transactional
-    @PostMapping("/change-password")
+    @PostMapping("/changepassword")
     public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
-        PasswordResetToken token = passwordResetTokenRepository.findByPasswordResetToken(changePasswordRequest.getPasswordResetToken());
+        PasswordResetToken token = passwordResetTokenRepository.findByPasswordResetToken(changePasswordRequest.getToken());
+
+        if (!changePasswordRequest.getNewPassword().equals(changePasswordRequest.getConfirmNewPassword())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Passwords are not the same!"));
+        }
 
         if (token != null) {
             User user = userRepository.findByEmailIgnoreCase(token.getUser().getEmail()).get();

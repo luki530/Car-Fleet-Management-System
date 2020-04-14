@@ -1,23 +1,24 @@
 package pl.com.carfleetmanagementsystem.http.request;
 
-import pl.com.carfleetmanagementsystem.models.PasswordResetToken;
-
 import javax.validation.constraints.NotBlank;
 
 public class ChangePasswordRequest {
 
     @NotBlank
-    private String passwordResetToken;
+    private String token;
 
     @NotBlank
     private String newPassword;
 
-    public String getPasswordResetToken() {
-        return passwordResetToken;
+    @NotBlank
+    private String confirmNewPassword;
+
+    public String getToken() {
+        return token;
     }
 
-    public void setPasswordResetToken(String passwordResetToken) {
-        this.passwordResetToken = passwordResetToken;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getNewPassword() {
@@ -26,5 +27,13 @@ public class ChangePasswordRequest {
 
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+
+    public String getConfirmNewPassword() {
+        return confirmNewPassword;
+    }
+
+    public void setConfirmNewPassword(String confirmNewPassword) {
+        this.confirmNewPassword = confirmNewPassword;
     }
 }
