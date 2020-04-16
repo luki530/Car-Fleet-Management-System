@@ -81,4 +81,5 @@ public class JwtResponse {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 }
