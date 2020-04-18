@@ -14,7 +14,7 @@ import pl.com.carfleetmanagementsystem.repository.UserRepository;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
-	private static UserRepository userRepository;
+	UserRepository userRepository;
 
 	@Override
 	@Transactional

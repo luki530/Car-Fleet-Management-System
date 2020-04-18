@@ -29,8 +29,6 @@ public class UserDetailsImpl implements UserDetails {
 
     private boolean phoneNumberConfirmed;
 
-    private Long cardId;
-
     @JsonIgnore
     private String password;
 
@@ -96,11 +94,6 @@ public class UserDetailsImpl implements UserDetails {
     public String getPhoneNumber() {
         return phoneNumber;
     }
-
-    public Long getCardId() {
-        return cardId;
-    }
-
 
     @Override
     public boolean isAccountNonExpired() {
