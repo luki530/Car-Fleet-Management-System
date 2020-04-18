@@ -1,5 +1,6 @@
 package pl.com.carfleetmanagementsystem.controllers;
 
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,11 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import pl.com.carfleetmanagementsystem.http.request.ChangePasswordRequest;
-import pl.com.carfleetmanagementsystem.http.request.ResetPasswordRequest;
+import pl.com.carfleetmanagementsystem.http.request.*;
 import pl.com.carfleetmanagementsystem.models.*;
-import pl.com.carfleetmanagementsystem.http.request.LoginRequest;
-import pl.com.carfleetmanagementsystem.http.request.SignupRequest;
 import pl.com.carfleetmanagementsystem.http.response.JwtResponse;
 import pl.com.carfleetmanagementsystem.http.response.MessageResponse;
 import pl.com.carfleetmanagementsystem.repository.*;
@@ -49,6 +47,9 @@ public class AuthController {
     RoleRepository roleRepository;
 
     @Autowired
+    CardRepository cardRepository;
+
+    @Autowired
     private EmailConfirmationTokenRepository emailConfirmationTokenRepository;
 
     @Autowired
@@ -67,6 +68,32 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     private MessageService messageService = new MessageServiceImpl("JDJhJDEyJGRxWGlveW1Rd05xMzB0YVJhLjBpVHV6aFQ4a21JY3l6SEF4M0ZxTnZjLmFRcVVKVi9PbFhh");
+
+    @Transactional
+    @PostMapping("/cardlogin")
+    public ResponseEntity<?> authenticateUsersCardId(@Valid @RequestBody CardLoginRequest cardLoginRequest){
+
+        Card card = cardRepository.findByCardId(cardLoginRequest.getCardId()).get();
+        User user = card.getUser();
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getUsername(), encoder.encode(user.getPassword())));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                userDetails.getId(),
+                userDetails.getUsername(),
+                userDetails.getEmail(),
+                userDetails.getName(),
+                userDetails.getPhoneNumber(),
+                roles));
+    }
 
     @Transactional
     @PostMapping("/signin")
