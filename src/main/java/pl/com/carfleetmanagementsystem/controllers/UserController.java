@@ -12,6 +12,7 @@ import pl.com.carfleetmanagementsystem.repository.UserRepository;
 import pl.com.carfleetmanagementsystem.security.jwt.JwtUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -35,6 +36,12 @@ public class UserController {
         token=token.substring(7);
         String username = jwtUtils.getUserNameFromJwtToken(token);
         User user = userRepository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException());
+        return ResponseEntity.ok().body(user);
+    }
+
+    @GetMapping("/userprofile")
+    public ResponseEntity<User> id(Long id){
+        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException());
         return ResponseEntity.ok().body(user);
     }
 
