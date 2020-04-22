@@ -4,7 +4,6 @@ import javax.validation.constraints.NotBlank;
 
 public class CardLoginRequest {
 
-    @NotBlank
     private Long cardId;
 
     public Long getCardId() {
