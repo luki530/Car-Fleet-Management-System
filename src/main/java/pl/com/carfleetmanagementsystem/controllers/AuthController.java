@@ -71,17 +71,15 @@ public class AuthController {
 
     @Transactional
     @PostMapping("/cardlogin")
-    public ResponseEntity<?> authenticateUsersCardId(@Valid @RequestBody CardLoginRequest cardLoginRequest){
+    public ResponseEntity<?> authenticateUsersCardId(@Valid @RequestBody CardLoginRequest cardLoginRequest) {
 
         Card card = cardRepository.findByCardId(cardLoginRequest.getCardId()).get();
         User user = card.getUser();
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(UserDetailsImpl.build(user), null);
 
-//        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null);
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         String jwt = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -225,6 +223,7 @@ public class AuthController {
         emailSenderService.sendEmail(mailMessage);
 
         Constants.JUSTSEND_API_URL = "https://justsend.pl/api/rest";
+
         PhoneNumberConfirmationCode phoneNumberConfirmationCode = new PhoneNumberConfirmationCode(user);
         phoneNumberConfirmationCodeRepository.save(phoneNumberConfirmationCode);
 
@@ -235,7 +234,8 @@ public class AuthController {
 
     @Transactional
     @RequestMapping(value = "/confirm-email", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseEntity<?> confirmUserEmail(@RequestParam("token") String confirmationToken) {
+    public ResponseEntity<?> confirmUserEmail(@Valid @RequestBody ConfirmEmailRequest confirmEmailRequest) {
+        String confirmationToken = confirmEmailRequest.getConfirmationToken();
         EmailConfirmationToken token = emailConfirmationTokenRepository.findByConfirmationToken(confirmationToken);
 
         if (token != null) {
@@ -252,10 +252,13 @@ public class AuthController {
 
     @Transactional
     @RequestMapping(value = "/confirm-phone-number", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseEntity<?> confirmUserPhoneNumber(@RequestParam("code") String confirmationCode) {
+    public ResponseEntity<?> confirmUserPhoneNumber(@Valid @RequestBody ConfirmPhoneNumberRequest confirmPhoneNumberRequest) {
+
+        String confirmationCode = confirmPhoneNumberRequest.getConfirmationCode();
+
         PhoneNumberConfirmationCode code = phoneNumberConfirmationCodeRepository.findByConfirmationCode(confirmationCode);
 
-        if (code != null) {
+        if (code != null && code.getUser().getUsername().equals(confirmPhoneNumberRequest.getUsername())) {
             User user = userRepository.findByEmailIgnoreCase(code.getUser().getEmail()).get();
             user.setPhoneNumberConfirmed(true);
             userRepository.save(user);
