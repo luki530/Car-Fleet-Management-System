@@ -4,7 +4,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.Random;
-import java.util.UUID;
 
 @Entity
 public class PhoneNumberConfirmationCode {
@@ -28,7 +27,7 @@ public class PhoneNumberConfirmationCode {
     public PhoneNumberConfirmationCode(User user) {
         this.user = user;
         createdDate = new Date();
-        confirmationCode = String.valueOf(new Random().nextInt(10000));
+        confirmationCode = String.format("%04d", new Random().nextInt(10000));
     }
 
     public long getId() {
