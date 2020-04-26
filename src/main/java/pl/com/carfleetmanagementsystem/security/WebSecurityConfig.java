@@ -64,9 +64,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/test/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .logout().deleteCookies("JSESSIONID")
-                .and()
-                .rememberMe().key("uniqueAndSecret").rememberMeParameter("remember-me").tokenValiditySeconds(86400);
+//                .logout().deleteCookies("JSESSIONID")
+//                .and()
+                .rememberMe()
+                    .alwaysRemember(true)
+                    .tokenValiditySeconds(30*5)
+                    .rememberMeCookieName("session-id")
+                    .key("secret");
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }

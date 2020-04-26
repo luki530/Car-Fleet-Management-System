@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.com.carfleetmanagementsystem.models.LoggerDevice;
 import pl.com.carfleetmanagementsystem.repository.LoggerDeviceRepository;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,11 +19,11 @@ public class LoggerDeviceController {
     @Autowired
     LoggerDeviceRepository loggerDeviceRepository;
 
-    @DeleteMapping("/{loggerDeviceId}")
-    public ResponseEntity<?> deleteLoggerDeviceById(@PathVariable("loggerDeviceId") Long loggerDeviceId) {
+    @DeleteMapping("/listofloggerdevices/{loggerDeviceId}")
+    public HttpStatus deleteLoggerDeviceById(@PathVariable("loggerDeviceId") Long loggerDeviceId) {
         LoggerDevice loggerDevice = loggerDeviceRepository.findById(loggerDeviceId).orElseThrow(() -> new IllegalArgumentException());
         loggerDeviceRepository.delete(loggerDevice);
-        return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.OK);
+        return HttpStatus.FORBIDDEN;
     }
 
     @GetMapping("/listofloggerdevices")
@@ -31,28 +32,26 @@ public class LoggerDeviceController {
         return ResponseEntity.ok().body(loggerDevices);
     }
 
-    @GetMapping("/loggerdevice/{loggerDeviceId}")
+    @GetMapping("/listofloggerdevices/{loggerDeviceId}")
     public ResponseEntity<LoggerDevice> findById(@PathVariable("loggerDeviceId") Long loggerDeviceId){
         LoggerDevice loggerDevice = loggerDeviceRepository.findById(loggerDeviceId).orElseThrow(() -> new IllegalArgumentException());
         return ResponseEntity.ok().body(loggerDevice);
 
     }
     @PostMapping("/listofloggerdevices")
-    public ResponseEntity<LoggerDevice> createLoggerDevice(@RequestBody LoggerDevice loggerDevice){
+    public ResponseEntity<LoggerDevice> createLoggerDevice(@Valid @RequestBody LoggerDevice loggerDevice){
         return ResponseEntity.ok().body(loggerDeviceRepository.save(loggerDevice));
     }
 
-    @PutMapping("/listofloggerdevices")
-    public ResponseEntity<LoggerDevice> updateLoggerDevice(@RequestBody LoggerDevice loggerDevice){
-        Optional<LoggerDevice> loggerDeviceId = this.loggerDeviceRepository.findById(loggerDevice.getLoggerDeviceId());
-        LoggerDevice loggerDeviceUpdate = loggerDeviceId.get();
+    @PutMapping("/listofloggerdevices/{loggerDeviceId}")
+    public ResponseEntity<LoggerDevice> updateLoggerDevice(@PathVariable("loggerDeviceId") Long loggerDeviceId, @Valid @RequestBody LoggerDevice loggerDevice){
+        loggerDevice.setLoggerDeviceId(loggerDeviceId);
+        Optional<LoggerDevice> loggerDeviceDb = this.loggerDeviceRepository.findById(loggerDevice.getLoggerDeviceId());
+        LoggerDevice loggerDeviceUpdate = loggerDeviceDb.get();
         loggerDeviceUpdate.setCar(loggerDevice.getCar());
-        loggerDeviceUpdate.setLoggerDeviceId(loggerDevice.getLoggerDeviceId());
-        loggerDevice.setSerialNumber(loggerDevice.getSerialNumber());
-        loggerDevice.setSimCardNumber(loggerDevice.getSimCardNumber());
+        loggerDeviceUpdate.setSerialNumber(loggerDevice.getSerialNumber());
+        loggerDeviceUpdate.setSimCardNumber(loggerDevice.getSimCardNumber());
         return ResponseEntity.ok().body(loggerDeviceRepository.save(loggerDeviceUpdate));
     }
-
-
 
 }

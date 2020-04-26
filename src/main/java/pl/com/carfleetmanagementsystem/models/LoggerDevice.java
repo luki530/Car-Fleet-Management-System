@@ -1,6 +1,7 @@
 package pl.com.carfleetmanagementsystem.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class LoggerDevice {
@@ -13,23 +14,27 @@ public class LoggerDevice {
 
     private String simCardNumber;
 
-    @OneToOne(targetEntity = Car.class, fetch = FetchType.EAGER)
-    private Car car;
+    @OneToMany(targetEntity = Car.class, fetch = FetchType.EAGER)
+    private Set<Car> car;
 
-    public LoggerDevice(long loggerDeviceId, String serialNumber, String simCardNumber, Car car) {
+    public LoggerDevice(Long loggerDeviceId, String serialNumber, String simCardNumber) {
         this.loggerDeviceId = loggerDeviceId;
         this.serialNumber = serialNumber;
         this.simCardNumber = simCardNumber;
-        this.car = car;
     }
+
     public LoggerDevice(){
     }
 
-    public long getLoggerDeviceId() {
+    public LoggerDevice(Long loggerDeviceId){
+        this.loggerDeviceId = loggerDeviceId;
+    }
+
+    public Long getLoggerDeviceId() {
         return loggerDeviceId;
     }
 
-    public void setLoggerDeviceId(long loggerDeviceId) {
+    public void setLoggerDeviceId(Long loggerDeviceId) {
         this.loggerDeviceId = loggerDeviceId;
     }
 
@@ -49,11 +54,11 @@ public class LoggerDevice {
         this.simCardNumber = simCardNumber;
     }
 
-    public Car getCar() {
+    public Set<Car> getCar() {
         return car;
     }
 
-    public void setCar(Car car) {
+    public void setCar(Set<Car> car) {
         this.car = car;
     }
 

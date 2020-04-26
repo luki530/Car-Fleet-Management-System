@@ -3,22 +3,24 @@ package pl.com.carfleetmanagementsystem.models;
 import javax.persistence.*;
 import org.springframework.beans.factory.annotation.Configurable;
 
+import java.util.Set;
+
 @Entity
-@Configurable
+@Table(name = "car_logs")
 public class CarLogs {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long carLogsId;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    private User driver;
+    @OneToMany(targetEntity = User.class, fetch = FetchType.EAGER)
+    private Set<User> driver;
 
-    @OneToOne(targetEntity = Car.class, fetch = FetchType.EAGER)
-    private Car car;
+    @OneToMany(targetEntity = Car.class, fetch = FetchType.EAGER)
+    private Set<Car> car;
 
-    @OneToOne(targetEntity = LoggerDevice.class, fetch = FetchType.EAGER)
-    private LoggerDevice loggerDevice;
+    @OneToMany(targetEntity = LoggerDevice.class, fetch = FetchType.EAGER)
+    private Set<LoggerDevice> loggerDevice;
 
     private long time;
 
@@ -26,20 +28,22 @@ public class CarLogs {
 
     private Double acceleration;
 
-//    private Location gpsLocation;
+    @OneToMany(targetEntity = Location.class, fetch = FetchType.EAGER)
+    private Set<Location> gpsLocation;
 
-    public CarLogs(User driver, Car car, LoggerDevice loggerDevice, long time, Double speed, Double acceleration) {
-        this.driver = driver;
-        this.car = car;
-        this.loggerDevice = loggerDevice;
+    public CarLogs(Long carLogsId, long time, Double speed, Double acceleration) {
+        this.carLogsId = carLogsId;
         this.time = time;
         this.speed = speed;
         this.acceleration = acceleration;
-//        this.gpsLocation = gpsLocation;
     }
 
     public CarLogs() {
 
+    }
+
+    public CarLogs(Long carLogsId) {
+        this.carLogsId = carLogsId;
     }
 
     public Long getCarLogsId() {
@@ -48,30 +52,6 @@ public class CarLogs {
 
     public void setCarLogsId(Long carLogsId) {
         this.carLogsId = carLogsId;
-    }
-
-    public User getDriver() {
-        return driver;
-    }
-
-    public void setDriver(User driver) {
-        this.driver = driver;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-    public LoggerDevice getLoggerDevice() {
-        return loggerDevice;
-    }
-
-    public void setLoggerDevice(LoggerDevice loggerDevice) {
-        this.loggerDevice = loggerDevice;
     }
 
     public long getTime() {
@@ -97,12 +77,35 @@ public class CarLogs {
     public void setAcceleration(Double acceleration) {
         this.acceleration = acceleration;
     }
-//
-//    public Location getGpsLocation() {
-//        return gpsLocation;
-//    }
-//
-//    public void setGpsLocation(Location gpsLocation) {
-//        this.gpsLocation = gpsLocation;
-//    }
+    public Set<User> getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Set<User> driver) {
+        this.driver = driver;
+    }
+
+    public Set<Car> getCar() {
+        return car;
+    }
+
+    public void setCar(Set<Car> car) {
+        this.car = car;
+    }
+
+    public Set<LoggerDevice> getLoggerDevice() {
+        return loggerDevice;
+    }
+
+    public void setLoggerDevice(Set<LoggerDevice> loggerDevice) {
+        this.loggerDevice = loggerDevice;
+    }
+
+    public Set<Location> getGpsLocation() {
+        return gpsLocation;
+    }
+
+    public void setGpsLocation(Set<Location> gpsLocation) {
+        this.gpsLocation = gpsLocation;
+    }
 }

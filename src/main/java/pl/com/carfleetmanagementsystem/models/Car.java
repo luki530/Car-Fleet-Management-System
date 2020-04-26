@@ -18,21 +18,26 @@ public class Car {
 
     private boolean isBlocked;
 
-    public Car(long carId, String model, String plateNumber, boolean isBlocked) {
-        this.carId = carId;
+    public Car(Long carId, String model, String plateNumber, boolean isBlocked) {
         this.model = model;
         this.plateNumber = plateNumber;
         this.isBlocked = isBlocked;
+        this.carId = carId;
     }
+
+    public Car(Long carId){
+        this.carId = carId;
+    }
+
     public Car() {
     }
 
-    public long getCarId() {
+    public Long getCarId() {
         return carId;
     }
 
-    public void setCarId(long carId) {
-        carId = carId;
+    public void setCarId(Long carId) {
+        this.carId = carId;
     }
 
     public String getModel() {

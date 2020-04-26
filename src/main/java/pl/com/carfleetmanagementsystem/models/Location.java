@@ -1,10 +1,28 @@
 package pl.com.carfleetmanagementsystem.models;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Location {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long locationId;
+
     private boolean hasCoordinates;
     private float latitude;
     private float longitude;
     private String address;
+
+    public Location() {
+    }
+
+    public Location(Long locationId) {
+        this.locationId = locationId;
+    }
 
     public Location(String address) {
         this.setAddress(address);
@@ -64,30 +82,38 @@ public class Location {
         }
     }
 
-//    public boolean equals(Object o) {
-//        if (this == o) {
-//            return true;
-//        } else if (!(o instanceof com.google.api.gbase.client.Location)) {
-//            return false;
-//        } else {
-//            com.google.api.gbase.client.Location location = (com.google.api.gbase.client.Location)o;
-//            if (this.hasCoordinates != location.hasCoordinates) {
-//                return false;
-//            } else {
-//                if (this.hasCoordinates) {
-//                    if (Float.compare(location.latitude, this.latitude) != 0) {
-//                        return false;
-//                    }
-//
-//                    if (Float.compare(location.longitude, this.longitude) != 0) {
-//                        return false;
-//                    }
-//                }
-//
-//                return this.address.equals(location.address);
-//            }
-//        }
-//    }
+    public Long getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(Long locationId) {
+        this.locationId = locationId;
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        } else if (!(o instanceof pl.com.carfleetmanagementsystem.models.Location)) {
+            return false;
+        } else {
+            pl.com.carfleetmanagementsystem.models.Location location = (pl.com.carfleetmanagementsystem.models.Location)o;
+            if (this.hasCoordinates != location.hasCoordinates) {
+                return false;
+            } else {
+                if (this.hasCoordinates) {
+                    if (Float.compare(location.latitude, this.latitude) != 0) {
+                        return false;
+                    }
+
+                    if (Float.compare(location.longitude, this.longitude) != 0) {
+                        return false;
+                    }
+                }
+
+                return this.address.equals(location.address);
+            }
+        }
+    }
 
     public int hashCode() {
         int result = this.address.hashCode();

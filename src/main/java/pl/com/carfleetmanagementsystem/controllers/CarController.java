@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.com.carfleetmanagementsystem.models.Car;
 import pl.com.carfleetmanagementsystem.repository.CarRepository;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,10 +20,10 @@ public class CarController {
     CarRepository carRepository;
 
     @DeleteMapping("/listofcars/{carId}")
-    public ResponseEntity<?> deleteCarById(@PathVariable("carId") Long carId) {
+    public HttpStatus deleteCarById(@PathVariable("carId") Long carId) {
         Car car = carRepository.findById(carId).orElseThrow(() -> new IllegalArgumentException());
         carRepository.delete(car);
-        return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.OK);
+        return HttpStatus.FORBIDDEN;
     }
 
     @GetMapping("/listofcars")
@@ -38,20 +39,18 @@ public class CarController {
 
     }
     @PostMapping("/listofcars")
-    public ResponseEntity<Car> createCar(@RequestBody Car car){
+    public ResponseEntity<Car> createCar(@Valid @RequestBody Car car){
         return ResponseEntity.ok().body(carRepository.save(car));
     }
 
-    @PutMapping("/listofcars")
-    public ResponseEntity<Car> updateCar(@RequestBody Car car){
-        Optional<Car> carId = this.carRepository.findById(car.getCarId());
-        Car carUpdate = carId.get();
-        carUpdate.setCarId(car.getCarId());
+    @PutMapping("/listofcars/{carId}")
+    public ResponseEntity<Car> updateCar(@PathVariable("carId") Long carId, @Valid @RequestBody Car car){
+        car.setCarId(carId);
+        Optional<Car> carDb = this.carRepository.findById(car.getCarId());
+        Car carUpdate = carDb.get();
         carUpdate.setModel(car.getModel());
         carUpdate.setPlateNumber(car.getPlateNumber());
         carUpdate.setBlocked(car.isBlocked());
         return ResponseEntity.ok().body(carRepository.save(carUpdate));
     }
-
-
 }
