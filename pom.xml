@@ -68,21 +68,7 @@
             <artifactId>justsend-api-client</artifactId>
             <version>1.2.0</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.google.gdata</groupId>
-            <artifactId>core</artifactId>
-            <version>1.47.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>11.0.2</version>
-        </dependency>
-
-    </dependencies>
-
+</dependencies>
     <build>
         <plugins>
             <plugin>

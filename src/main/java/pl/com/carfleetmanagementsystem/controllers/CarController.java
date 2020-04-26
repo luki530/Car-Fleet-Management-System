@@ -18,7 +18,7 @@ public class CarController {
     @Autowired
     CarRepository carRepository;
 
-    @DeleteMapping("/{carId}")
+    @DeleteMapping("/listofcars/{carId}")
     public ResponseEntity<?> deleteCarById(@PathVariable("carId") Long carId) {
         Car car = carRepository.findById(carId).orElseThrow(() -> new IllegalArgumentException());
         carRepository.delete(car);
@@ -26,33 +26,31 @@ public class CarController {
     }
 
     @GetMapping("/listofcars")
-    //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('BOSS') or hasRole('ADMIN')")
     public ResponseEntity<List<Car>> findAllCars(){
         List<Car> cars = carRepository.findAll();
         return ResponseEntity.ok().body(cars);
     }
 
-    @GetMapping("/{carId}")
-    public ResponseEntity<Car> findById(Long carId){
+    @GetMapping("/listofcars/{carId}")
+    public ResponseEntity<Car> findById(@PathVariable("carId") Long carId){
         Car car = carRepository.findById(carId).orElseThrow(() -> new IllegalArgumentException());
         return ResponseEntity.ok().body(car);
 
     }
-    @PostMapping("/cars")
+    @PostMapping("/listofcars")
     public ResponseEntity<Car> createCar(@RequestBody Car car){
         return ResponseEntity.ok().body(carRepository.save(car));
     }
 
-    @PutMapping("/cars")
-    public ResponseEntity<Car> updateCar(Car car){
+    @PutMapping("/listofcars")
+    public ResponseEntity<Car> updateCar(@RequestBody Car car){
         Optional<Car> carId = this.carRepository.findById(car.getCarId());
         Car carUpdate = carId.get();
         carUpdate.setCarId(car.getCarId());
         carUpdate.setModel(car.getModel());
         carUpdate.setPlateNumber(car.getPlateNumber());
         carUpdate.setBlocked(car.isBlocked());
-        carRepository.save(carUpdate);
-        return ResponseEntity.ok().body(carUpdate);
+        return ResponseEntity.ok().body(carRepository.save(carUpdate));
     }
 
 

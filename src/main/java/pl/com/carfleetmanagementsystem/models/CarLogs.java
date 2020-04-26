@@ -2,13 +2,15 @@ package pl.com.carfleetmanagementsystem.models;
 
 import javax.persistence.*;
 import com.google.api.gbase.client.*;
+import org.springframework.beans.factory.annotation.Configurable;
 
 @Entity
+@Configurable
 public class CarLogs {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long carLogsId;
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User driver;
@@ -39,6 +41,14 @@ public class CarLogs {
 
     public CarLogs() {
 
+    }
+
+    public Long getCarLogsId() {
+        return carLogsId;
+    }
+
+    public void setCarLogsId(Long carLogsId) {
+        this.carLogsId = carLogsId;
     }
 
     public User getDriver() {
