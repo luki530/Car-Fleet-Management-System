@@ -1,7 +1,6 @@
 package pl.com.carfleetmanagementsystem.models;
 
 import javax.persistence.*;
-import com.google.api.gbase.client.*;
 import org.springframework.beans.factory.annotation.Configurable;
 
 @Entity
