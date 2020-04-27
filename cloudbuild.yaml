@@ -1,7 +1,0 @@
-steps:
-  - name: maven:3.6.3-jdk-11-slim
-    entrypoint: 'mvn'
-    args: ['clean', 'install', '-DskipTests']
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/carfleetmanagementsystem', '.']
-images: ['gcr.io/$PROJECT_ID/carfleetmanagementsystem']
