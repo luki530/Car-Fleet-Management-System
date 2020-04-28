@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Random;
 
 @Entity
+@Table(name = "phone_number_confirmation_code")
 public class PhoneNumberConfirmationCode {
 
     @Id
@@ -18,7 +19,7 @@ public class PhoneNumberConfirmationCode {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "phoneNumberConfirmationCode")
     private User user;
 
     public PhoneNumberConfirmationCode() {

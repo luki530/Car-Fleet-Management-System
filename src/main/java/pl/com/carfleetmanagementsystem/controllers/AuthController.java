@@ -15,10 +15,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import pl.com.carfleetmanagementsystem.errorhandler.exception.RoleNotFoundException;
 import pl.com.carfleetmanagementsystem.http.request.*;
 import pl.com.carfleetmanagementsystem.models.*;
 import pl.com.carfleetmanagementsystem.http.response.JwtResponse;
@@ -172,38 +174,38 @@ public class AuthController {
 
         if (strRoles == null) {
             Role userRole = roleRepository.findByName(ERole.ROLE_NEW)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    .orElseThrow(() -> new RoleNotFoundException(roles));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                                .orElseThrow(() -> new RoleNotFoundException(roles));
                         roles.add(adminRole);
 
                         break;
                     case "employee":
                         Role employeeRole = roleRepository.findByName(ERole.ROLE_EMPLOYEE)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                                .orElseThrow(() -> new RoleNotFoundException(roles));
                         roles.add(employeeRole);
 
                         break;
                     case "boss":
                         Role bossRole = roleRepository.findByName(ERole.ROLE_BOSS)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                                .orElseThrow(() -> new RoleNotFoundException(roles));
                         roles.add(bossRole);
 
                         break;
                     case "driver":
                         Role driverRole = roleRepository.findByName(ERole.ROLE_DRIVER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                                .orElseThrow(() -> new RoleNotFoundException(roles));
                         roles.add(driverRole);
 
                         break;
                     default:
                         Role newRole = roleRepository.findByName(ERole.ROLE_NEW)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                                .orElseThrow(() -> new RoleNotFoundException(roles));
                         roles.add(newRole);
                 }
             });
@@ -219,7 +221,7 @@ public class AuthController {
         mailMessage.setSubject("Complete Registration!");
         mailMessage.setFrom("carfleetmanagementsystem@gmail.com");
         mailMessage.setText("To confirm your email, please click here : "
-                + "http://localhost:4200/confirmemail?token=" + emailConfirmationToken.getConfirmationToken());
+                + "https://www.carfleetmanagementsystem.pl/confirmemail?token=" + emailConfirmationToken.getConfirmationToken());
         emailSenderService.sendEmail(mailMessage);
 
         Constants.JUSTSEND_API_URL = "https://justsend.pl/api/rest";
@@ -274,7 +276,7 @@ public class AuthController {
     public ResponseEntity<?> resetPassword(@Valid @RequestBody ResetPasswordRequest resetPasswordRequest) {
         if (userRepository.existsByUsername(resetPasswordRequest.getUsername())) {
 
-            User user = userRepository.findByUsername(resetPasswordRequest.getUsername()).orElseThrow(() -> new RuntimeException("User not found !"));
+            User user = userRepository.findByUsername(resetPasswordRequest.getUsername()).orElseThrow(() -> new UsernameNotFoundException(resetPasswordRequest.getUsername()));
 
             PasswordResetToken passwordResetToken = new PasswordResetToken(user);
 
@@ -285,7 +287,7 @@ public class AuthController {
             mailMessage.setSubject("Reset your password!");
             mailMessage.setFrom("carfleetmanagementsystem@gmail.com");
             mailMessage.setText("To reset your password, please click here : "
-                    + "http://localhost:4200/changepassword?token=" + passwordResetToken.getPasswordResetToken());
+                    + "https://www.carfleetmanagementsystem.pl/changepassword?token=" + passwordResetToken.getPasswordResetToken());
             emailSenderService.sendEmail(mailMessage);
             return ResponseEntity.ok(new MessageResponse("Email for password reset has been sent to your email! "));
         }

@@ -41,6 +41,14 @@ public class User {
 
     private boolean phoneNumberConfirmed = false;
 
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "ec_id", referencedColumnName = "id")
+    private EmailConfirmationToken emailConfirmationToken;
+
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="pnc_id", referencedColumnName = "id")
+    private PhoneNumberConfirmationCode phoneNumberConfirmationCode;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
@@ -130,5 +138,21 @@ public class User {
 
     public void setPhoneNumberConfirmed(boolean phoneNumberConfirmed) {
         this.phoneNumberConfirmed = phoneNumberConfirmed;
+    }
+
+    public EmailConfirmationToken getEmailConfirmationToken() {
+        return emailConfirmationToken;
+    }
+
+    public void setEmailConfirmationToken(EmailConfirmationToken emailConfirmationToken) {
+        this.emailConfirmationToken = emailConfirmationToken;
+    }
+
+    public PhoneNumberConfirmationCode getPhoneNumberConfirmationCode() {
+        return phoneNumberConfirmationCode;
+    }
+
+    public void setPhoneNumberConfirmationCode(PhoneNumberConfirmationCode phoneNumberConfirmationCode) {
+        this.phoneNumberConfirmationCode = phoneNumberConfirmationCode;
     }
 }

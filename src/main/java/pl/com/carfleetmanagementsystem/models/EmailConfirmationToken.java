@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
+@Table(name="email_confirmation_token")
 public class EmailConfirmationToken {
 
     @Id
@@ -18,7 +19,7 @@ public class EmailConfirmationToken {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "emailConfirmationToken")
     private User user;
 
 
