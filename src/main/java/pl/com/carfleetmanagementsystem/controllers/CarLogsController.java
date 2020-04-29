@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.com.carfleetmanagementsystem.errorhandler.exception.CarNotFoundException;
 import pl.com.carfleetmanagementsystem.models.Car;
 import pl.com.carfleetmanagementsystem.models.CarLogs;
 import pl.com.carfleetmanagementsystem.repository.CarLogsRepository;
@@ -22,7 +23,7 @@ public class CarLogsController {
 
     @DeleteMapping("/carlogs/{carLogsId}")
     public HttpStatus deleteCarLogsById(@PathVariable("carLogsId") Long carLogsId) {
-        CarLogs carLogs = carLogsRepository.findById(carLogsId).orElseThrow(() -> new IllegalArgumentException());
+        CarLogs carLogs = carLogsRepository.findById(carLogsId).orElseThrow(() -> new CarNotFoundException(carLogsId));
         carLogsRepository.delete(carLogs);
         return HttpStatus.FORBIDDEN;
     }
@@ -35,7 +36,7 @@ public class CarLogsController {
 
     @GetMapping("/carlogs/{carLogsId}")
     public ResponseEntity<CarLogs> findById(@PathVariable("carLogsId") Long carLogsId){
-        CarLogs carLogs = carLogsRepository.findById(carLogsId).orElseThrow(() -> new IllegalArgumentException());
+        CarLogs carLogs = carLogsRepository.findById(carLogsId).orElseThrow(() -> new CarNotFoundException(carLogsId));
         return ResponseEntity.ok().body(carLogs);
 
     }

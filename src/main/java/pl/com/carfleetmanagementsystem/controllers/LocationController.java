@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.com.carfleetmanagementsystem.errorhandler.exception.LocationNotFound;
 import pl.com.carfleetmanagementsystem.models.Location;
 import pl.com.carfleetmanagementsystem.repository.LocationRepository;
 
@@ -19,7 +20,7 @@ public class LocationController {
 
     @DeleteMapping("/location/{locationId}")
     public HttpStatus deleteLocationById(@PathVariable("locationId") Long locationId) {
-        Location location = locationRepository.findById(locationId).orElseThrow(() -> new IllegalArgumentException());
+        Location location = locationRepository.findById(locationId).orElseThrow(() -> new LocationNotFound(locationId));
         locationRepository.delete(location);
         return HttpStatus.FORBIDDEN;
     }
@@ -32,7 +33,7 @@ public class LocationController {
 
     @GetMapping("/location/{locationId}")
     public ResponseEntity<Location> findById(@PathVariable("locationId") Long locationId){
-        Location location = locationRepository.findById(locationId).orElseThrow(() -> new IllegalArgumentException());
+        Location location = locationRepository.findById(locationId).orElseThrow(() -> new LocationNotFound(locationId));
         return ResponseEntity.ok().body(location);
 
     }
