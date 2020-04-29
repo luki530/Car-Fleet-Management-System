@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.com.carfleetmanagementsystem.errorhandler.exception.LoggerDeviceNotFoundException;
 import pl.com.carfleetmanagementsystem.models.LoggerDevice;
 import pl.com.carfleetmanagementsystem.repository.LoggerDeviceRepository;
 
@@ -21,7 +22,7 @@ public class LoggerDeviceController {
 
     @DeleteMapping("/listofloggerdevices/{loggerDeviceId}")
     public HttpStatus deleteLoggerDeviceById(@PathVariable("loggerDeviceId") Long loggerDeviceId) {
-        LoggerDevice loggerDevice = loggerDeviceRepository.findById(loggerDeviceId).orElseThrow(() -> new IllegalArgumentException());
+        LoggerDevice loggerDevice = loggerDeviceRepository.findById(loggerDeviceId).orElseThrow(() -> new LoggerDeviceNotFoundException(loggerDeviceId));
         loggerDeviceRepository.delete(loggerDevice);
         return HttpStatus.FORBIDDEN;
     }
@@ -34,7 +35,7 @@ public class LoggerDeviceController {
 
     @GetMapping("/listofloggerdevices/{loggerDeviceId}")
     public ResponseEntity<LoggerDevice> findById(@PathVariable("loggerDeviceId") Long loggerDeviceId){
-        LoggerDevice loggerDevice = loggerDeviceRepository.findById(loggerDeviceId).orElseThrow(() -> new IllegalArgumentException());
+        LoggerDevice loggerDevice = loggerDeviceRepository.findById(loggerDeviceId).orElseThrow(() -> new LoggerDeviceNotFoundException(loggerDeviceId));
         return ResponseEntity.ok().body(loggerDevice);
 
     }

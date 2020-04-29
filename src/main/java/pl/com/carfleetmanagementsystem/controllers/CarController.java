@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.com.carfleetmanagementsystem.errorhandler.exception.CarNotFoundException;
 import pl.com.carfleetmanagementsystem.models.Car;
 import pl.com.carfleetmanagementsystem.repository.CarRepository;
 
@@ -21,7 +22,7 @@ public class CarController {
 
     @DeleteMapping("/listofcars/{carId}")
     public HttpStatus deleteCarById(@PathVariable("carId") Long carId) {
-        Car car = carRepository.findById(carId).orElseThrow(() -> new IllegalArgumentException());
+        Car car = carRepository.findById(carId).orElseThrow(() -> new CarNotFoundException(carId));
         carRepository.delete(car);
         return HttpStatus.FORBIDDEN;
     }
@@ -34,7 +35,7 @@ public class CarController {
 
     @GetMapping("/listofcars/{carId}")
     public ResponseEntity<Car> findById(@PathVariable("carId") Long carId){
-        Car car = carRepository.findById(carId).orElseThrow(() -> new IllegalArgumentException());
+        Car car = carRepository.findById(carId).orElseThrow(() -> new CarNotFoundException(carId));
         return ResponseEntity.ok().body(car);
 
     }
