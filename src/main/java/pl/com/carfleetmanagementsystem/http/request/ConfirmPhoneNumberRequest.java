@@ -1,4 +1,4 @@
-package pl.com.carfleetmanagementsystem.models;
+package pl.com.carfleetmanagementsystem.http.request;
 
 import javax.validation.constraints.NotBlank;
 
