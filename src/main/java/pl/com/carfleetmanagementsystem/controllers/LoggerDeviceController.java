@@ -49,7 +49,6 @@ public class LoggerDeviceController {
         loggerDevice.setLoggerDeviceId(loggerDeviceId);
         Optional<LoggerDevice> loggerDeviceDb = this.loggerDeviceRepository.findById(loggerDevice.getLoggerDeviceId());
         LoggerDevice loggerDeviceUpdate = loggerDeviceDb.get();
-        loggerDeviceUpdate.setCar(loggerDevice.getCar());
         loggerDeviceUpdate.setSerialNumber(loggerDevice.getSerialNumber());
         loggerDeviceUpdate.setSimCardNumber(loggerDevice.getSimCardNumber());
         return ResponseEntity.ok().body(loggerDeviceRepository.save(loggerDeviceUpdate));
