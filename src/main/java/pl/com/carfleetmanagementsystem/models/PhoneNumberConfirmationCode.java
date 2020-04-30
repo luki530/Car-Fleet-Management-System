@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Random;
 
 @Entity
+@Table(name = "phone_number_confirmation_code")
 public class PhoneNumberConfirmationCode {
 
     @Id
@@ -18,7 +19,7 @@ public class PhoneNumberConfirmationCode {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "phone_number_confirmation_code")
     private User user;
 
     public PhoneNumberConfirmationCode() {
