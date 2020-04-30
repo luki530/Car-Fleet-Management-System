@@ -19,7 +19,7 @@ public class EmailConfirmationToken {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @OneToOne(mappedBy = "email_confirmation_token")
+    @OneToOne(mappedBy = "emailConfirmationToken")
     private User user;
 
 

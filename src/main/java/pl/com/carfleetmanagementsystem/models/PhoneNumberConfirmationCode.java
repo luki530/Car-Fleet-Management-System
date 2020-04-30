@@ -19,7 +19,7 @@ public class PhoneNumberConfirmationCode {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @OneToOne(mappedBy = "phone_number_confirmation_code")
+    @OneToOne(mappedBy = "phoneNumberConfirmationCode")
     private User user;
 
     public PhoneNumberConfirmationCode() {
