@@ -23,10 +23,6 @@ public class PhoneNumberConfirmationCode {
     private User user;
 
     public PhoneNumberConfirmationCode() {
-    }
-
-    public PhoneNumberConfirmationCode(User user) {
-        this.user = user;
         createdDate = new Date();
         confirmationCode = String.format("%04d", new Random().nextInt(10000));
     }

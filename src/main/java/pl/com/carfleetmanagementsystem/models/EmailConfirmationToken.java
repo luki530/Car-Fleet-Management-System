@@ -22,13 +22,7 @@ public class EmailConfirmationToken {
     @OneToOne(mappedBy = "emailConfirmationToken")
     private User user;
 
-
     public EmailConfirmationToken() {
-    }
-
-
-    public EmailConfirmationToken(User user) {
-        this.user = user;
         createdDate = new Date();
         confirmationToken = UUID.randomUUID().toString();
     }

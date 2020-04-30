@@ -1,5 +1,6 @@
 package pl.com.carfleetmanagementsystem.models;
 
+import java.awt.image.ComponentSampleModel;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,9 +50,17 @@ public class User {
     @JoinColumn(name="pnc_id", referencedColumnName = "id")
     private PhoneNumberConfirmationCode phoneNumberConfirmationCode;
 
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "c_id", referencedColumnName = "cardId")
+    private Card card;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @OneToOne(mappedBy = "driver")
+    private CarLogs carLogs;
+
 
     public User() {
     }

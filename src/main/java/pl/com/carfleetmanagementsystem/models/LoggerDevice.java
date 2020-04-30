@@ -14,8 +14,8 @@ public class LoggerDevice {
 
     private String simCardNumber;
 
-    @OneToMany(targetEntity = Car.class, fetch = FetchType.EAGER)
-    private Set<Car> car;
+    @OneToOne(mappedBy = "loggerDevice")
+    private Car car;
 
     public LoggerDevice(Long loggerDeviceId, String serialNumber, String simCardNumber) {
         this.loggerDeviceId = loggerDeviceId;
@@ -52,14 +52,6 @@ public class LoggerDevice {
 
     public void setSimCardNumber(String simCardNumber) {
         this.simCardNumber = simCardNumber;
-    }
-
-    public Set<Car> getCar() {
-        return car;
-    }
-
-    public void setCar(Set<Car> car) {
-        this.car = car;
     }
 
 }

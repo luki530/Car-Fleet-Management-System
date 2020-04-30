@@ -1,9 +1,6 @@
 package pl.com.carfleetmanagementsystem.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Location {
@@ -11,6 +8,9 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long locationId;
+
+    @OneToOne(mappedBy = "gpsLocation")
+    private CarLogs carLogs;
 
     private boolean hasCoordinates;
     private float latitude;

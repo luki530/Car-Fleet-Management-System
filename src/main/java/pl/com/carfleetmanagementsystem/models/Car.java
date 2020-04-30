@@ -1,9 +1,6 @@
 package pl.com.carfleetmanagementsystem.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Car {
@@ -11,6 +8,14 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long carId;
+
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "cl_id", referencedColumnName = "carLogsId")
+    private CarLogs carLogs;
+
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "ld_id", referencedColumnName = "loggerDeviceId")
+    private LoggerDevice loggerDevice;
 
     private String model;
 
@@ -62,5 +67,21 @@ public class Car {
 
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
+    }
+
+    public CarLogs getCarLogs() {
+        return carLogs;
+    }
+
+    public void setCarLogs(CarLogs carLogs) {
+        this.carLogs = carLogs;
+    }
+
+    public LoggerDevice getLoggerDevice() {
+        return loggerDevice;
+    }
+
+    public void setLoggerDevice(LoggerDevice loggerDevice) {
+        this.loggerDevice = loggerDevice;
     }
 }
