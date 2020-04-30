@@ -13,14 +13,12 @@ public class CarLogs {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long carLogsId;
 
-    @OneToMany(targetEntity = User.class, fetch = FetchType.EAGER)
-    private Set<User> driver;
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "cl_id", referencedColumnName = "id")
+    private User driver;
 
-    @OneToMany(targetEntity = Car.class, fetch = FetchType.EAGER)
-    private Set<Car> car;
-
-    @OneToMany(targetEntity = LoggerDevice.class, fetch = FetchType.EAGER)
-    private Set<LoggerDevice> loggerDevice;
+    @OneToOne(mappedBy = "carLogs")
+    private Car car;
 
     private long time;
 
@@ -28,8 +26,9 @@ public class CarLogs {
 
     private Double acceleration;
 
-    @OneToMany(targetEntity = Location.class, fetch = FetchType.EAGER)
-    private Set<Location> gpsLocation;
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "gl_id", referencedColumnName = "locationId")
+    private Location gpsLocation;
 
     public CarLogs(Long carLogsId, long time, Double speed, Double acceleration) {
         this.carLogsId = carLogsId;
@@ -77,35 +76,19 @@ public class CarLogs {
     public void setAcceleration(Double acceleration) {
         this.acceleration = acceleration;
     }
-    public Set<User> getDriver() {
+    public User getDriver() {
         return driver;
     }
 
-    public void setDriver(Set<User> driver) {
+    public void setDriver(User driver) {
         this.driver = driver;
     }
 
-    public Set<Car> getCar() {
-        return car;
-    }
-
-    public void setCar(Set<Car> car) {
-        this.car = car;
-    }
-
-    public Set<LoggerDevice> getLoggerDevice() {
-        return loggerDevice;
-    }
-
-    public void setLoggerDevice(Set<LoggerDevice> loggerDevice) {
-        this.loggerDevice = loggerDevice;
-    }
-
-    public Set<Location> getGpsLocation() {
+    public Location getGpsLocation() {
         return gpsLocation;
     }
 
-    public void setGpsLocation(Set<Location> gpsLocation) {
+    public void setGpsLocation(Location gpsLocation) {
         this.gpsLocation = gpsLocation;
     }
 }
