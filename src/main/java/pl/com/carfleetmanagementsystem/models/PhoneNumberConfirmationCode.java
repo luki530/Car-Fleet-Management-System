@@ -18,7 +18,7 @@ public class PhoneNumberConfirmationCode {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     private User user;
 
     public PhoneNumberConfirmationCode() {
