@@ -1,5 +1,7 @@
 package pl.com.carfleetmanagementsystem.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.awt.image.ComponentSampleModel;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,6 +30,7 @@ public class User {
 
     @NotBlank
     @Size(max = 120)
+    @JsonIgnore
     private String password;
 
     @NotBlank
@@ -42,14 +45,17 @@ public class User {
 
     private boolean phoneNumberConfirmed = false;
 
+    @JsonIgnore
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "ec_id", referencedColumnName = "id")
     private EmailConfirmationToken emailConfirmationToken;
 
+    @JsonIgnore
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="pnc_id", referencedColumnName = "id")
     private PhoneNumberConfirmationCode phoneNumberConfirmationCode;
 
+    @JsonIgnore
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "c_id", referencedColumnName = "cardId")
     private Card card;
@@ -58,6 +64,7 @@ public class User {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @JsonIgnore
     @OneToOne(mappedBy = "driver")
     private CarLogs carLogs;
 

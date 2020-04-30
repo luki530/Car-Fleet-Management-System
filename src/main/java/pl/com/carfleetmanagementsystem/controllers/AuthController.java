@@ -148,6 +148,7 @@ public class AuthController {
             }
         }
 
+
         String regexp = "(\\+48|0)[0-9]{9}";
 
         if (!signUpRequest.getPhoneNumber().matches(regexp)) {
@@ -212,6 +213,7 @@ public class AuthController {
         }
 
         user.setRoles(roles);
+        userRepository.save(user);
 
         EmailConfirmationToken emailConfirmationToken = new EmailConfirmationToken();
         emailConfirmationTokenRepository.save(emailConfirmationToken);
