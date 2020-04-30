@@ -212,7 +212,6 @@ public class AuthController {
         }
 
         user.setRoles(roles);
-        userRepository.save(user);
 
         EmailConfirmationToken emailConfirmationToken = new EmailConfirmationToken();
         emailConfirmationTokenRepository.save(emailConfirmationToken);
@@ -223,16 +222,16 @@ public class AuthController {
         mailMessage.setText("To confirm your email, please click here : "
                 + "https://www.carfleetmanagementsystem.pl/confirmemail?token=" + emailConfirmationToken.getConfirmationToken());
         emailSenderService.sendEmail(mailMessage);
-        userRepository.save(user);
+        user.setEmailConfirmationToken(emailConfirmationToken);
 
         Constants.JUSTSEND_API_URL = "https://justsend.pl/api/rest";
-
         PhoneNumberConfirmationCode phoneNumberConfirmationCode = new PhoneNumberConfirmationCode();
         phoneNumberConfirmationCodeRepository.save(phoneNumberConfirmationCode);
-
         messageService.sendMessage(user.getPhoneNumber(), "CFMS", "Your phone confirmation code: " + phoneNumberConfirmationCode.getConfirmationCode(), PRO);
+        user.setPhoneNumberConfirmationCode(phoneNumberConfirmationCode);
 
         userRepository.save(user);
+
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
