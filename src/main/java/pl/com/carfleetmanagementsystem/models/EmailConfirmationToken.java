@@ -18,7 +18,7 @@ public class EmailConfirmationToken {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private User user;
 
 
