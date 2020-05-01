@@ -67,7 +67,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .logout().deleteCookies("JSESSIONID")
 //                .and()
                 .rememberMe()
-                    .alwaysRemember(true)
                     .tokenValiditySeconds(30*5)
                     .rememberMeCookieName("session-id")
                     .key("secret");
