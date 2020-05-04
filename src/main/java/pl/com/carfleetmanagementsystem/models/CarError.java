@@ -10,7 +10,7 @@ public class CarError {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "car_id")
     private Car car;
 
     private String errorCode;
