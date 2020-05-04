@@ -1,21 +1,27 @@
 package pl.com.carfleetmanagementsystem.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long carId;
+    private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cl_id", referencedColumnName = "carLogsId")
-    private CarLog carLogs;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ld_id", referencedColumnName = "loggerDeviceId")
+    @JoinColumn(name = "ld_id", referencedColumnName = "id")
     private LoggerDevice loggerDevice;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "car")
+    private Set<CarLog> carLogs;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "car")
+    private Set<CarError> carError;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "car")
+    private Set<Notification> notification;
 
     private String model;
 
@@ -23,26 +29,26 @@ public class Car {
 
     private boolean isBlocked;
 
-    public Car(Long carId, String model, String plateNumber, boolean isBlocked) {
+    public Car(Long id, String model, String plateNumber, boolean isBlocked) {
         this.model = model;
         this.plateNumber = plateNumber;
         this.isBlocked = isBlocked;
-        this.carId = carId;
+        this.id = id;
     }
 
-    public Car(Long carId) {
-        this.carId = carId;
+    public Car(Long id) {
+        this.id = id;
     }
 
     public Car() {
     }
 
-    public Long getCarId() {
-        return carId;
+    public Long getId() {
+        return id;
     }
 
-    public void setCarId(Long carId) {
-        this.carId = carId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getModel() {
@@ -69,12 +75,28 @@ public class Car {
         isBlocked = blocked;
     }
 
-    public CarLog getCarLog() {
+    public Set<CarLog> getCarLogs() {
         return carLogs;
     }
 
-    public void setCarLog(CarLog carLog) {
-        this.carLogs = carLog;
+    public void setCarLogs(Set<CarLog> carLogs) {
+        this.carLogs = carLogs;
+    }
+
+    public void setCarError(Set<CarError> carError) {
+        this.carError = carError;
+    }
+
+    public Set<CarError> getCarError() {
+        return carError;
+    }
+
+    public Set<Notification> getNotification() {
+        return notification;
+    }
+
+    public void setNotification(Set<Notification> notification) {
+        this.notification = notification;
     }
 
     public LoggerDevice getLoggerDevice() {

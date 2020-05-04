@@ -13,10 +13,10 @@ import java.util.Optional;
 public interface LoggerDeviceRepository extends JpaRepository<LoggerDevice, Long> {
 
     @Override
-    void deleteById(Long loggerDeviceId);
+    void deleteById(Long id);
 
     @Override
-    Optional<LoggerDevice> findById(Long loggerDeviceId);
+    Optional<LoggerDevice> findById(Long id);
 
     @Override
     List<LoggerDevice> findAll();

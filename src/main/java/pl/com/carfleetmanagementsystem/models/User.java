@@ -51,12 +51,12 @@ public class User {
 
     @JsonIgnore
     @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="pnc_id", referencedColumnName = "id")
+    @JoinColumn(name = "pnc_id", referencedColumnName = "id")
     private PhoneNumberConfirmationCode phoneNumberConfirmationCode;
 
     @JsonIgnore
     @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "c_id", referencedColumnName = "cardId")
+    @JoinColumn(name = "c_id", referencedColumnName = "id")
     private Card card;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -64,8 +64,12 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     @JsonIgnore
-    @OneToOne(mappedBy = "driver")
-    private CarLog carLogs;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "driver")
+    private Set<CarLog> carLog;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "driver")
+    private Set<Notification> notification;
 
 
     public User() {
@@ -169,5 +173,29 @@ public class User {
 
     public void setPhoneNumberConfirmationCode(PhoneNumberConfirmationCode phoneNumberConfirmationCode) {
         this.phoneNumberConfirmationCode = phoneNumberConfirmationCode;
+    }
+
+    public Card getCard() {
+        return card;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
+    }
+
+    public Set<CarLog> getCarLog() {
+        return carLog;
+    }
+
+    public void setCarLog(Set<CarLog> carLog) {
+        this.carLog = carLog;
+    }
+
+    public Set<Notification> getNotification() {
+        return notification;
+    }
+
+    public void setNotification(Set<Notification> notification) {
+        this.notification = notification;
     }
 }

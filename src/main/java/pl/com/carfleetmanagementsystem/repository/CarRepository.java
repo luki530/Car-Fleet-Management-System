@@ -15,7 +15,7 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     List<Car> findAll();
 
     @Override
-    Optional<Car> findById(Long carId);
+    Optional<Car> findById(Long id);
 
     @Override
     void delete(Car car);

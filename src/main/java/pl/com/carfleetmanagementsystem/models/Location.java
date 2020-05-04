@@ -7,7 +7,7 @@ public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long locationId;
+    private Long id;
 
     @OneToOne(mappedBy = "gpsLocation")
     private CarLog carLog;
@@ -20,8 +20,8 @@ public class Location {
     public Location() {
     }
 
-    public Location(Long locationId) {
-        this.locationId = locationId;
+    public Location(Long id) {
+        this.id = id;
     }
 
     public Location(String address) {
@@ -82,12 +82,12 @@ public class Location {
         }
     }
 
-    public Long getLocationId() {
-        return locationId;
+    public Long getId() {
+        return id;
     }
 
-    public void setLocationId(Long locationId) {
-        this.locationId = locationId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public boolean equals(Object o) {

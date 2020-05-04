@@ -1,9 +1,6 @@
 package pl.com.carfleetmanagementsystem.models;
 
 import javax.persistence.*;
-import org.springframework.beans.factory.annotation.Configurable;
-
-import java.util.Set;
 
 @Entity
 @Table(name = "car_logs")
@@ -11,13 +8,14 @@ public class CarLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long carLogsId;
+    private Long id;
 
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "cl_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id")
     private User driver;
 
-    @OneToOne(mappedBy = "carLogs")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id")
     private Car car;
 
     private long time;
@@ -27,11 +25,11 @@ public class CarLog {
     private Double acceleration;
 
     @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "gl_id", referencedColumnName = "locationId")
+    @JoinColumn(name = "gl_id", referencedColumnName = "id")
     private Location gpsLocation;
 
-    public CarLog(Long carLogsId, long time, Double speed, Double acceleration) {
-        this.carLogsId = carLogsId;
+    public CarLog(Long id, long time, Double speed, Double acceleration) {
+        this.id = id;
         this.time = time;
         this.speed = speed;
         this.acceleration = acceleration;
@@ -41,16 +39,16 @@ public class CarLog {
 
     }
 
-    public CarLog(Long carLogsId) {
-        this.carLogsId = carLogsId;
+    public CarLog(Long id) {
+        this.id = id;
     }
 
-    public Long getCarLogsId() {
-        return carLogsId;
+    public Long getId() {
+        return id;
     }
 
-    public void setCarLogsId(Long carLogsId) {
-        this.carLogsId = carLogsId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public long getTime() {
