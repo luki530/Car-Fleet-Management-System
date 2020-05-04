@@ -16,7 +16,6 @@ public class CarLogsAnalyser implements Runnable {
 
     public CarLogsAnalyser(Car car) {
         this.car = car;
-        run();
     }
 
     public void analyseLog(CarLog carLog) {
