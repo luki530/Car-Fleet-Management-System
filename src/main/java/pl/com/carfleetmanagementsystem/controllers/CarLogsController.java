@@ -21,8 +21,8 @@ public class CarLogsController {
     @Autowired
     CarLogsRepository carLogsRepository;
 
-    @Autowired
-    CarAnalysersManager carAnalysersManager;
+//    @Autowired
+//    CarAnalysersManager carAnalysersManager;
 
     @DeleteMapping("/{carLogsId}")
     public HttpStatus deleteCarLogsById(@PathVariable("carLogsId") Long carLogsId) {
@@ -45,7 +45,7 @@ public class CarLogsController {
     }
     @PostMapping("/create")
     public ResponseEntity<CarLog> createCarLogs(@Valid  @RequestBody CarLog carLog){
-        carAnalysersManager.analyseCarLog(carLog);
+       // carAnalysersManager.analyseCarLog(carLog);
         return ResponseEntity.ok().body(carLogsRepository.save(carLog));
     }
 
