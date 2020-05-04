@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "car_logs")
-public class CarLogs {
+public class CarLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,18 +30,18 @@ public class CarLogs {
     @JoinColumn(name = "gl_id", referencedColumnName = "locationId")
     private Location gpsLocation;
 
-    public CarLogs(Long carLogsId, long time, Double speed, Double acceleration) {
+    public CarLog(Long carLogsId, long time, Double speed, Double acceleration) {
         this.carLogsId = carLogsId;
         this.time = time;
         this.speed = speed;
         this.acceleration = acceleration;
     }
 
-    public CarLogs() {
+    public CarLog() {
 
     }
 
-    public CarLogs(Long carLogsId) {
+    public CarLog(Long carLogsId) {
         this.carLogsId = carLogsId;
     }
 
@@ -90,5 +90,13 @@ public class CarLogs {
 
     public void setGpsLocation(Location gpsLocation) {
         this.gpsLocation = gpsLocation;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
     }
 }

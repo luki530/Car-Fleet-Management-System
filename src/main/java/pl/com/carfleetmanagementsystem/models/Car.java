@@ -11,7 +11,7 @@ public class Car {
 
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "cl_id", referencedColumnName = "carLogsId")
-    private CarLogs carLogs;
+    private CarLog carLog;
 
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "ld_id", referencedColumnName = "loggerDeviceId")
@@ -69,12 +69,12 @@ public class Car {
         isBlocked = blocked;
     }
 
-    public CarLogs getCarLogs() {
-        return carLogs;
+    public CarLog getCarLog() {
+        return carLog;
     }
 
-    public void setCarLogs(CarLogs carLogs) {
-        this.carLogs = carLogs;
+    public void setCarLog(CarLog carLog) {
+        this.carLog = carLog;
     }
 
     public LoggerDevice getLoggerDevice() {

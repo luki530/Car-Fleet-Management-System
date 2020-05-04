@@ -1,7 +1,6 @@
 package pl.com.carfleetmanagementsystem.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import pl.com.carfleetmanagementsystem.models.CarLogs;
 import pl.com.carfleetmanagementsystem.models.Location;
 
 import java.util.List;

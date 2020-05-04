@@ -2,21 +2,20 @@ package pl.com.carfleetmanagementsystem.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pl.com.carfleetmanagementsystem.models.Car;
-import pl.com.carfleetmanagementsystem.models.CarLogs;
+import pl.com.carfleetmanagementsystem.models.CarLog;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CarLogsRepository extends JpaRepository<CarLogs, Long> {
+public interface CarLogsRepository extends JpaRepository<CarLog, Long> {
 
     @Override
-    Optional<CarLogs> findById(Long carLogsId);
+    Optional<CarLog> findById(Long carLogsId);
 
     @Override
-    void delete(CarLogs carLogs);
+    void delete(CarLog carLog);
 
     @Override
-    List<CarLogs> findAll();
+    List<CarLog> findAll();
 }
