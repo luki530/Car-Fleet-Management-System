@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+//import pl.com.carfleetmanagementsystem.analyse.CarAnalysersManager;
 import pl.com.carfleetmanagementsystem.analyse.CarAnalysersManager;
 import pl.com.carfleetmanagementsystem.errorhandler.exception.CarNotFoundException;
 import pl.com.carfleetmanagementsystem.models.CarLog;
@@ -21,8 +22,8 @@ public class CarLogsController {
     @Autowired
     CarLogsRepository carLogsRepository;
 
-//    @Autowired
-//    CarAnalysersManager carAnalysersManager;
+    @Autowired
+    CarAnalysersManager carAnalysersManager;
 
     @DeleteMapping("/{id}")
     public HttpStatus deleteCarLogsById(@PathVariable("id") Long id) {
@@ -45,7 +46,7 @@ public class CarLogsController {
     }
     @PostMapping("/create")
     public ResponseEntity<CarLog> createCarLogs(@Valid  @RequestBody CarLog carLog){
-       // carAnalysersManager.analyseCarLog(carLog);
+        carAnalysersManager.analyseCarLog(carLog);
         return ResponseEntity.ok().body(carLogsRepository.save(carLog));
     }
 
