@@ -23,14 +23,7 @@ public class CarAnalysersManager implements Runnable{
 
     private Queue<CarLog> carLogToAnalyse = new ArrayDeque<>();
 
-    private Long previousCheckTime;
-
-    private Thread managerThread;
-
-    private boolean cancel = false;
-
     private void runOrUpdateCarLogsAnalysers() {
-        if (System.currentTimeMillis() - previousCheckTime > (60 * 1000)) {
             cars = carRepository.findAll();
             for (Car car : cars) {
                 if (!carLogsAnalysers.containsKey(car)) {
@@ -40,29 +33,24 @@ public class CarAnalysersManager implements Runnable{
                     carLogsAnalysers.put(car, analyser);
                 }
             }
-            previousCheckTime = System.currentTimeMillis();
-        }
     }
 
     public void analyseCarLog(CarLog carLog){
         carLogToAnalyse.offer(carLog);
+		redirectCarLogs();
     }
+
+	public void redirectCarLogs(){
+		for(CarLog cl : carLogToAnalyse){
+			CarLog carLog = carLogToAnalyse.poll();
+			if (carLog != null) {
+					carLogsAnalysers.get(carLog.getCar()).analyseLog(carLog);
+			}
+		}
+	}
 
     @PostConstruct
     public void init() {
-        previousCheckTime= System.currentTimeMillis()-100000;
-        managerThread = new Thread(this, "Manager thread");
-        managerThread.start();
-    }
-
-    @Override
-    public void run() {
-        while (!cancel) {
-            runOrUpdateCarLogsAnalysers();
-            CarLog carLog = carLogToAnalyse.poll();
-            if (carLog != null) {
-                carLogsAnalysers.get(carLog.getCar()).analyseLog(carLog);
-            }
-        }
+        runOrUpdateCarLogsAnalysers();
     }
 }
