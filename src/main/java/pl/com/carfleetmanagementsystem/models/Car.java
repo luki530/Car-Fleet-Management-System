@@ -11,7 +11,7 @@ public class Car {
 
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "cl_id", referencedColumnName = "carLogsId")
-    private CarLog carLog;
+    private CarLog carLogs;
 
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "ld_id", referencedColumnName = "loggerDeviceId")
