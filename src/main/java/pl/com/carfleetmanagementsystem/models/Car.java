@@ -9,11 +9,11 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long carId;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cl_id", referencedColumnName = "carLogsId")
     private CarLog carLogs;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ld_id", referencedColumnName = "loggerDeviceId")
     private LoggerDevice loggerDevice;
 
@@ -30,7 +30,7 @@ public class Car {
         this.carId = carId;
     }
 
-    public Car(Long carId){
+    public Car(Long carId) {
         this.carId = carId;
     }
 
@@ -70,11 +70,11 @@ public class Car {
     }
 
     public CarLog getCarLog() {
-        return carLog;
+        return carLogs;
     }
 
     public void setCarLog(CarLog carLog) {
-        this.carLog = carLog;
+        this.carLogs = carLog;
     }
 
     public LoggerDevice getLoggerDevice() {
