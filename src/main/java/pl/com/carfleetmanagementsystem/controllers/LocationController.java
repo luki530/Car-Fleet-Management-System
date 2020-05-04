@@ -18,9 +18,9 @@ public class LocationController {
     @Autowired
     LocationRepository locationRepository;
 
-    @DeleteMapping("/location/{locationId}")
-    public HttpStatus deleteLocationById(@PathVariable("locationId") Long locationId) {
-        Location location = locationRepository.findById(locationId).orElseThrow(() -> new LocationNotFound(locationId));
+    @DeleteMapping("/location/{id}")
+    public HttpStatus deleteLocationById(@PathVariable("id") Long id) {
+        Location location = locationRepository.findById(id).orElseThrow(() -> new LocationNotFound(id));
         locationRepository.delete(location);
         return HttpStatus.FORBIDDEN;
     }
@@ -31,9 +31,9 @@ public class LocationController {
         return ResponseEntity.ok().body(locations);
     }
 
-    @GetMapping("/location/{locationId}")
-    public ResponseEntity<Location> findById(@PathVariable("locationId") Long locationId){
-        Location location = locationRepository.findById(locationId).orElseThrow(() -> new LocationNotFound(locationId));
+    @GetMapping("/location/{id}")
+    public ResponseEntity<Location> findById(@PathVariable("id") Long id){
+        Location location = locationRepository.findById(id).orElseThrow(() -> new LocationNotFound(id));
         return ResponseEntity.ok().body(location);
 
     }

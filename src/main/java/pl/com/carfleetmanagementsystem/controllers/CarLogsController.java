@@ -24,9 +24,9 @@ public class CarLogsController {
     @Autowired
     CarAnalysersManager carAnalysersManager;
 
-    @DeleteMapping("/{carLogsId}")
-    public HttpStatus deleteCarLogsById(@PathVariable("carLogsId") Long carLogsId) {
-        CarLog carLog = carLogsRepository.findById(carLogsId).orElseThrow(() -> new CarNotFoundException(carLogsId));
+    @DeleteMapping("/{id}")
+    public HttpStatus deleteCarLogsById(@PathVariable("id") Long id) {
+        CarLog carLog = carLogsRepository.findById(id).orElseThrow(() -> new CarNotFoundException(id));
         carLogsRepository.delete(carLog);
         return HttpStatus.FORBIDDEN;
     }
@@ -37,9 +37,9 @@ public class CarLogsController {
         return ResponseEntity.ok().body(carLogs);
     }
 
-    @GetMapping("/{carLogsId}")
-    public ResponseEntity<CarLog> findById(@PathVariable("carLogsId") Long carLogsId){
-        CarLog carLog = carLogsRepository.findById(carLogsId).orElseThrow(() -> new CarNotFoundException(carLogsId));
+    @GetMapping("/{id}")
+    public ResponseEntity<CarLog> findById(@PathVariable("id") Long id){
+        CarLog carLog = carLogsRepository.findById(id).orElseThrow(() -> new CarNotFoundException(id));
         return ResponseEntity.ok().body(carLog);
 
     }

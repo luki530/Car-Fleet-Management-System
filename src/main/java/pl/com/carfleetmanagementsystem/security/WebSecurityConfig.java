@@ -53,8 +53,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
@@ -63,13 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/auth/**").permitAll()
                 .antMatchers("/test/**").permitAll()
                 .anyRequest().authenticated()
-                .and()
-                .logout().deleteCookies("session-id")
-                .and()
-                .rememberMe()
-                    .tokenValiditySeconds(30*5)
-                    .rememberMeCookieName("session-id")
-                    .key("secret");
+                .and();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }

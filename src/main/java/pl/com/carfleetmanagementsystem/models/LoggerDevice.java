@@ -1,14 +1,13 @@
 package pl.com.carfleetmanagementsystem.models;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 public class LoggerDevice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long loggerDeviceId;
+    private Long id;
 
     private String serialNumber;
 
@@ -17,8 +16,8 @@ public class LoggerDevice {
     @OneToOne(mappedBy = "loggerDevice")
     private Car car;
 
-    public LoggerDevice(Long loggerDeviceId, String serialNumber, String simCardNumber) {
-        this.loggerDeviceId = loggerDeviceId;
+    public LoggerDevice(Long id, String serialNumber, String simCardNumber) {
+        this.id = id;
         this.serialNumber = serialNumber;
         this.simCardNumber = simCardNumber;
     }
@@ -26,16 +25,16 @@ public class LoggerDevice {
     public LoggerDevice(){
     }
 
-    public LoggerDevice(Long loggerDeviceId){
-        this.loggerDeviceId = loggerDeviceId;
+    public LoggerDevice(Long id){
+        this.id = id;
     }
 
-    public Long getLoggerDeviceId() {
-        return loggerDeviceId;
+    public Long getId() {
+        return id;
     }
 
-    public void setLoggerDeviceId(Long loggerDeviceId) {
-        this.loggerDeviceId = loggerDeviceId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getSerialNumber() {

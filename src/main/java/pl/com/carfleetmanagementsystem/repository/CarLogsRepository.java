@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface CarLogsRepository extends JpaRepository<CarLog, Long> {
 
     @Override
-    Optional<CarLog> findById(Long carLogsId);
+    Optional<CarLog> findById(Long id);
 
     @Override
     void delete(CarLog carLog);

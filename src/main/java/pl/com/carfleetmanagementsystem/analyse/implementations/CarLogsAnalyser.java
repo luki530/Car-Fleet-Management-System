@@ -20,7 +20,7 @@ public class CarLogsAnalyser implements Runnable {
     }
 
     public void analyseLog(CarLog carLog) {
-        carLogs.offer(carLog);
+        this.carLogs.offer(carLog);
     }
 
     @Override

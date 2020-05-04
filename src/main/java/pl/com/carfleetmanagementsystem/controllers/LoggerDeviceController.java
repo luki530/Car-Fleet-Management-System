@@ -20,9 +20,9 @@ public class LoggerDeviceController {
     @Autowired
     LoggerDeviceRepository loggerDeviceRepository;
 
-    @DeleteMapping("/listofloggerdevices/{loggerDeviceId}")
-    public HttpStatus deleteLoggerDeviceById(@PathVariable("loggerDeviceId") Long loggerDeviceId) {
-        LoggerDevice loggerDevice = loggerDeviceRepository.findById(loggerDeviceId).orElseThrow(() -> new LoggerDeviceNotFoundException(loggerDeviceId));
+    @DeleteMapping("/listofloggerdevices/{id}")
+    public HttpStatus deleteLoggerDeviceById(@PathVariable("id") Long id) {
+        LoggerDevice loggerDevice = loggerDeviceRepository.findById(id).orElseThrow(() -> new LoggerDeviceNotFoundException(id));
         loggerDeviceRepository.delete(loggerDevice);
         return HttpStatus.FORBIDDEN;
     }
@@ -33,9 +33,9 @@ public class LoggerDeviceController {
         return ResponseEntity.ok().body(loggerDevices);
     }
 
-    @GetMapping("/listofloggerdevices/{loggerDeviceId}")
-    public ResponseEntity<LoggerDevice> findById(@PathVariable("loggerDeviceId") Long loggerDeviceId){
-        LoggerDevice loggerDevice = loggerDeviceRepository.findById(loggerDeviceId).orElseThrow(() -> new LoggerDeviceNotFoundException(loggerDeviceId));
+    @GetMapping("/listofloggerdevices/{id}")
+    public ResponseEntity<LoggerDevice> findById(@PathVariable("id") Long id){
+        LoggerDevice loggerDevice = loggerDeviceRepository.findById(id).orElseThrow(() -> new LoggerDeviceNotFoundException(id));
         return ResponseEntity.ok().body(loggerDevice);
 
     }
@@ -44,10 +44,10 @@ public class LoggerDeviceController {
         return ResponseEntity.ok().body(loggerDeviceRepository.save(loggerDevice));
     }
 
-    @PutMapping("/listofloggerdevices/{loggerDeviceId}")
-    public ResponseEntity<LoggerDevice> updateLoggerDevice(@PathVariable("loggerDeviceId") Long loggerDeviceId, @Valid @RequestBody LoggerDevice loggerDevice){
-        loggerDevice.setLoggerDeviceId(loggerDeviceId);
-        Optional<LoggerDevice> loggerDeviceDb = this.loggerDeviceRepository.findById(loggerDevice.getLoggerDeviceId());
+    @PutMapping("/listofloggerdevices/{id}")
+    public ResponseEntity<LoggerDevice> updateLoggerDevice(@PathVariable("id") Long id, @Valid @RequestBody LoggerDevice loggerDevice){
+        loggerDevice.setId(id);
+        Optional<LoggerDevice> loggerDeviceDb = this.loggerDeviceRepository.findById(loggerDevice.getId());
         LoggerDevice loggerDeviceUpdate = loggerDeviceDb.get();
         loggerDeviceUpdate.setSerialNumber(loggerDevice.getSerialNumber());
         loggerDeviceUpdate.setSimCardNumber(loggerDevice.getSimCardNumber());
