@@ -15,6 +15,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@RequestMapping("/carlog")
 public class CarLogsController {
 
     @Autowired
@@ -23,26 +24,26 @@ public class CarLogsController {
     @Autowired
     CarAnalysersManager carAnalysersManager;
 
-    @DeleteMapping("/carlogs/{carLogsId}")
+    @DeleteMapping("/{carLogsId}")
     public HttpStatus deleteCarLogsById(@PathVariable("carLogsId") Long carLogsId) {
         CarLog carLog = carLogsRepository.findById(carLogsId).orElseThrow(() -> new CarNotFoundException(carLogsId));
         carLogsRepository.delete(carLog);
         return HttpStatus.FORBIDDEN;
     }
 
-    @GetMapping("/carlogs")
+    @GetMapping("/findAll")
     public ResponseEntity<List<CarLog>> findAllCarLogs(){
         List<CarLog> carLogs = carLogsRepository.findAll();
         return ResponseEntity.ok().body(carLogs);
     }
 
-    @GetMapping("/carlogs/{carLogsId}")
+    @GetMapping("/{carLogsId}")
     public ResponseEntity<CarLog> findById(@PathVariable("carLogsId") Long carLogsId){
         CarLog carLog = carLogsRepository.findById(carLogsId).orElseThrow(() -> new CarNotFoundException(carLogsId));
         return ResponseEntity.ok().body(carLog);
 
     }
-    @PostMapping("/carlogs")
+    @PostMapping("/create")
     public ResponseEntity<CarLog> createCarLogs(@Valid  @RequestBody CarLog carLog){
         carAnalysersManager.analyseCarLog(carLog);
         return ResponseEntity.ok().body(carLogsRepository.save(carLog));
