@@ -1,7 +1,7 @@
 package pl.com.carfleetmanagementsystem.models;
 
 import javax.persistence.*;
-
+//google cloud jest glupi
 @Entity
 @Table(name = "car_logs")
 public class CarLog {
