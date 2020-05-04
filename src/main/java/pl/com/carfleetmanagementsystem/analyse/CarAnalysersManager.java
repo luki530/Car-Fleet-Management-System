@@ -1,6 +1,7 @@
 package pl.com.carfleetmanagementsystem.analyse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import pl.com.carfleetmanagementsystem.analyse.implementations.CarLogsAnalyser;
 import pl.com.carfleetmanagementsystem.models.Car;
@@ -11,7 +12,7 @@ import javax.annotation.PostConstruct;
 import java.util.*;
 
 @Component
-public class CarAnalysersManager {
+public class CarAnalysersManager implements Runnable{
 
     @Autowired
     CarRepository carRepository;
@@ -24,6 +25,8 @@ public class CarAnalysersManager {
 
     private Long previousCheckTime;
 
+    private Thread managerThread;
+
     private boolean cancel = false;
 
     private void runOrUpdateCarLogsAnalysers() {
@@ -31,7 +34,10 @@ public class CarAnalysersManager {
             cars = carRepository.findAll();
             for (Car car : cars) {
                 if (!carLogsAnalysers.containsKey(car)) {
-                    carLogsAnalysers.put(car, new CarLogsAnalyser(car));
+                    CarLogsAnalyser analyser = new CarLogsAnalyser(car);
+                    Thread thread = new Thread(analyser);
+                    thread.start();
+                    carLogsAnalysers.put(car, analyser);
                 }
             }
             previousCheckTime = System.currentTimeMillis();
@@ -45,6 +51,12 @@ public class CarAnalysersManager {
     @PostConstruct
     public void init() {
         previousCheckTime= System.currentTimeMillis()-100000;
+        managerThread = new Thread(this, "Manager thread");
+        managerThread.start();
+    }
+
+    @Override
+    public void run() {
         while (!cancel) {
             runOrUpdateCarLogsAnalysers();
             CarLog carLog = carLogsToAnalyse.poll();
