@@ -20,9 +20,9 @@ public class CarController {
     @Autowired
     CarRepository carRepository;
 
-    @DeleteMapping("/listofcars/{carId}")
-    public HttpStatus deleteCarById(@PathVariable("carId") Long carId) {
-        Car car = carRepository.findById(carId).orElseThrow(() -> new CarNotFoundException(carId));
+    @DeleteMapping("/listofcars/{id}")
+    public HttpStatus deleteCarById(@PathVariable("id") Long id) {
+        Car car = carRepository.findById(id).orElseThrow(() -> new CarNotFoundException(id));
         carRepository.delete(car);
         return HttpStatus.FORBIDDEN;
     }
@@ -33,9 +33,9 @@ public class CarController {
         return ResponseEntity.ok().body(cars);
     }
 
-    @GetMapping("/listofcars/{carId}")
-    public ResponseEntity<Car> findById(@PathVariable("carId") Long carId){
-        Car car = carRepository.findById(carId).orElseThrow(() -> new CarNotFoundException(carId));
+    @GetMapping("/listofcars/{id}")
+    public ResponseEntity<Car> findById(@PathVariable("id") Long id){
+        Car car = carRepository.findById(id).orElseThrow(() -> new CarNotFoundException(id));
         return ResponseEntity.ok().body(car);
 
     }
@@ -44,10 +44,10 @@ public class CarController {
         return ResponseEntity.ok().body(carRepository.save(car));
     }
 
-    @PutMapping("/listofcars/{carId}")
-    public ResponseEntity<Car> updateCar(@PathVariable("carId") Long carId, @Valid @RequestBody Car car){
-        car.setCarId(carId);
-        Optional<Car> carDb = this.carRepository.findById(car.getCarId());
+    @PutMapping("/listofcars/{id}")
+    public ResponseEntity<Car> updateCar(@PathVariable("id") Long id, @Valid @RequestBody Car car){
+        car.setId(id);
+        Optional<Car> carDb = this.carRepository.findById(car.getId());
         Car carUpdate = carDb.get();
         carUpdate.setModel(car.getModel());
         carUpdate.setPlateNumber(car.getPlateNumber());

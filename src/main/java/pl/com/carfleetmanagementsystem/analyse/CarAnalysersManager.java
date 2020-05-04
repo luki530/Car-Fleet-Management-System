@@ -21,7 +21,7 @@ public class CarAnalysersManager implements Runnable{
 
     private Map<Car, CarLogsAnalyser> carLogsAnalysers = new HashMap<>();
 
-    private Queue<CarLog> carLogsToAnalyse = new ArrayDeque<>();
+    private Queue<CarLog> carLogToAnalyse = new ArrayDeque<>();
 
     private Long previousCheckTime;
 
@@ -45,7 +45,7 @@ public class CarAnalysersManager implements Runnable{
     }
 
     public void analyseCarLog(CarLog carLog){
-        carLogsToAnalyse.offer(carLog);
+        carLogToAnalyse.offer(carLog);
     }
 
     @PostConstruct
@@ -59,7 +59,7 @@ public class CarAnalysersManager implements Runnable{
     public void run() {
         while (!cancel) {
             runOrUpdateCarLogsAnalysers();
-            CarLog carLog = carLogsToAnalyse.poll();
+            CarLog carLog = carLogToAnalyse.poll();
             if (carLog != null) {
                 carLogsAnalysers.get(carLog.getCar()).analyseLog(carLog);
             }

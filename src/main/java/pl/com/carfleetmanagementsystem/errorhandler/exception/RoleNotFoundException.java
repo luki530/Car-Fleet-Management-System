@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class RoleNotFoundException extends RuntimeException {
 
-    public RoleNotFoundException (Set<Role> role) {
+    public RoleNotFoundException (String role) {
         super("Could not find role: " + role);
     }
 }
