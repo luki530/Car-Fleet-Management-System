@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 import java.util.*;
 
 @Component
-public class CarAnalysersManager implements Runnable{
+public class CarAnalysersManager {
 
     @Autowired
     CarRepository carRepository;
