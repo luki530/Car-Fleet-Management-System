@@ -21,8 +21,6 @@ public class CarAnalysersManager implements Runnable{
 
     private Map<Car, CarLogsAnalyser> carLogsAnalysers = new HashMap<>();
 
-    private Queue<CarLog> carLogToAnalyse = new ArrayDeque<>();
-
     private void runOrUpdateCarLogsAnalysers() {
             cars = carRepository.findAll();
             for (Car car : cars) {
@@ -36,18 +34,11 @@ public class CarAnalysersManager implements Runnable{
     }
 
     public void analyseCarLog(CarLog carLog){
-        carLogToAnalyse.offer(carLog);
-		redirectCarLogs();
+		if (carLog != null) {
+			carLogsAnalysers.get(carLog.getCar()).analyseLog(carLog);
+		}
     }
 
-	public void redirectCarLogs(){
-		for(CarLog cl : carLogToAnalyse){
-			CarLog carLog = carLogToAnalyse.poll();
-			if (carLog != null) {
-					carLogsAnalysers.get(carLog.getCar()).analyseLog(carLog);
-			}
-		}
-	}
 
     @PostConstruct
     public void init() {
