@@ -10,7 +10,7 @@ public class Location {
     private Long locationId;
 
     @OneToOne(mappedBy = "gpsLocation")
-    private CarLogs carLogs;
+    private CarLog carLog;
 
     private boolean hasCoordinates;
     private float latitude;

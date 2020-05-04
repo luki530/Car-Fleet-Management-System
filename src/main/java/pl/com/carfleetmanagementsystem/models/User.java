@@ -2,7 +2,6 @@ package pl.com.carfleetmanagementsystem.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.awt.image.ComponentSampleModel;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -66,7 +65,7 @@ public class User {
 
     @JsonIgnore
     @OneToOne(mappedBy = "driver")
-    private CarLogs carLogs;
+    private CarLog carLogs;
 
 
     public User() {
