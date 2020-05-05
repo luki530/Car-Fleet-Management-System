@@ -228,7 +228,7 @@ public class AuthController {
 
         Constants.JUSTSEND_API_URL = "https://justsend.pl/api/rest";
         PhoneNumberConfirmationCode phoneNumberConfirmationCode = new PhoneNumberConfirmationCode();
-        phoneNumberConfirmationCodeRepository.save(phoneNumberConfirmationCode);
+       // phoneNumberConfirmationCodeRepository.save(phoneNumberConfirmationCode);
         messageService.sendMessage(user.getPhoneNumber(), "CFMS", "Your phone confirmation code: " + phoneNumberConfirmationCode.getConfirmationCode(), PRO);
         user.setPhoneNumberConfirmationCode(phoneNumberConfirmationCode);
 
