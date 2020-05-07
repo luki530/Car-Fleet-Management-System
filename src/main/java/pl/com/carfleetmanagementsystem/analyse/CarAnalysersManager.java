@@ -42,6 +42,6 @@ public class CarAnalysersManager {
 
     @PostConstruct
     public void init() {
-        runOrUpdateCarLogsAnalysers();
+        //runOrUpdateCarLogsAnalysers();
     }
 }
