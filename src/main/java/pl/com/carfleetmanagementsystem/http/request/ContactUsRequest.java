@@ -12,6 +12,8 @@ public class ContactUsRequest {
     @NotBlank
     private String message;
 
+    private boolean copy;
+
     public String getName() {
         return name;
     }
@@ -26,5 +28,9 @@ public class ContactUsRequest {
 
     public String getMessage() {
         return message;
+    }
+
+    public boolean getCopy(){
+        return copy;
     }
 }
