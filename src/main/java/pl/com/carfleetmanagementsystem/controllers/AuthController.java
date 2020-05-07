@@ -173,44 +173,9 @@ public class AuthController {
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
-        if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_NEW)
-                    .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_NEW.toString()));
-            roles.add(userRole);
-        } else {
-            strRoles.forEach(role -> {
-                switch (role) {
-                    case "admin":
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RoleNotFoundException(role));
-                        roles.add(adminRole);
-
-                        break;
-                    case "employee":
-                        Role employeeRole = roleRepository.findByName(ERole.ROLE_EMPLOYEE)
-                                .orElseThrow(() -> new RoleNotFoundException(role));
-                        roles.add(employeeRole);
-
-                        break;
-                    case "boss":
-                        Role bossRole = roleRepository.findByName(ERole.ROLE_BOSS)
-                                .orElseThrow(() -> new RoleNotFoundException(role));
-                        roles.add(bossRole);
-
-                        break;
-                    case "driver":
-                        Role driverRole = roleRepository.findByName(ERole.ROLE_DRIVER)
-                                .orElseThrow(() -> new RoleNotFoundException(role));
-                        roles.add(driverRole);
-
-                        break;
-                    default:
-                        Role newRole = roleRepository.findByName(ERole.ROLE_NEW)
-                                .orElseThrow(() -> new RoleNotFoundException(role));
-                        roles.add(newRole);
-                }
-            });
-        }
+        Role userRole = roleRepository.findByName(ERole.ROLE_NEW)
+                .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_NEW.toString()));
+        roles.add(userRole);
 
         user.setRoles(roles);
         userRepository.save(user);
@@ -228,7 +193,7 @@ public class AuthController {
 
         Constants.JUSTSEND_API_URL = "https://justsend.pl/api/rest";
         PhoneNumberConfirmationCode phoneNumberConfirmationCode = new PhoneNumberConfirmationCode();
-		//oszukujemy google cloud
+        //oszukujemy google cloud
         phoneNumberConfirmationCodeRepository.save(phoneNumberConfirmationCode);
         //messageService.sendMessage(user.getPhoneNumber(), "CFMS", "Your phone confirmation code: " + phoneNumberConfirmationCode.getConfirmationCode(), PRO);
         user.setPhoneNumberConfirmationCode(phoneNumberConfirmationCode);
