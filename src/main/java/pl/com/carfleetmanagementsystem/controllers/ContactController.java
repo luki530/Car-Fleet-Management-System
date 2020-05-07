@@ -1,6 +1,7 @@
 package pl.com.carfleetmanagementsystem.controllers;
 
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -26,6 +27,8 @@ public class ContactController {
         mailMessage.setSubject(contactUsRequest.getSubject());
         mailMessage.setFrom(contactUsRequest.getName());
         mailMessage.setText(contactUsRequest.getMessage());
+        if (contactUsRequest.getCopy())
+            mailMessage.setCc(contactUsRequest.getEmail());
         emailSenderService.sendEmail(mailMessage);
         return ResponseEntity.ok(new MessageResponse("Message successfully sent!"));
     }
