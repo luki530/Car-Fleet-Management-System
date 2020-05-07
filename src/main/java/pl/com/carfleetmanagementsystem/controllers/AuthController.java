@@ -116,10 +116,10 @@ public class AuthController {
 
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
+                userDetails.getPhoneNumber(),
+                userDetails.getName(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
-                userDetails.getName(),
-                userDetails.getPhoneNumber(),
                 roles));
     }
 
@@ -170,7 +170,6 @@ public class AuthController {
                 signUpRequest.getPhoneNumber(),
                 encoder.encode(signUpRequest.getPassword()));
 
-        Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
         Role userRole = roleRepository.findByName(ERole.ROLE_NEW)
