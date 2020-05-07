@@ -1,6 +1,8 @@
 package pl.com.carfleetmanagementsystem.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -54,7 +56,7 @@ public class User {
     @JoinColumn(name = "pnc_id", referencedColumnName = "id")
     private PhoneNumberConfirmationCode phoneNumberConfirmationCode;
 
-    @JsonIgnore
+    @JsonManagedReference
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "c_id", referencedColumnName = "id")
     private Card card;
