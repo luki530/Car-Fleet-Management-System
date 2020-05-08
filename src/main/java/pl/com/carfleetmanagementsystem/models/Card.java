@@ -10,11 +10,18 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    private Long cardId;
+
     @OneToOne(mappedBy = "card")
     private User user;
 
-    @NotBlank
-    private long cardId;
+    public Card() {
+    }
+
+    public Card(Long cardId) {
+        this.cardId = cardId;
+    }
 
     public Long getId() {
         return id;
@@ -32,11 +39,11 @@ public class Card {
         this.user = user;
     }
 
-    public long getCardId() {
+    public Long getCardId() {
         return cardId;
     }
 
-    public void setCardId(long cardId) {
+    public void setCardId(Long cardId) {
         this.cardId = cardId;
     }
 

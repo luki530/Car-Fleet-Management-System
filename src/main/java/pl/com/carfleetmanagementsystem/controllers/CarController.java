@@ -39,6 +39,7 @@ public class CarController {
         return ResponseEntity.ok().body(car);
 
     }
+
     @PostMapping("/listofcars")
     public ResponseEntity<Car> createCar(@Valid @RequestBody Car car){
         return ResponseEntity.ok().body(carRepository.save(car));
