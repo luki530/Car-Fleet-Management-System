@@ -21,8 +21,9 @@ public class Card {
     public Card() {
     }
 
-    public Card(Long cardId) {
+    public Card(Long cardId, User user) {
         this.cardId = cardId;
+        this.user = user;
     }
 
     public Long getId() {
