@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.com.carfleetmanagementsystem.models.Card;
 import pl.com.carfleetmanagementsystem.repository.CardRepository;
+import pl.com.carfleetmanagementsystem.repository.UserRepository;
 
 import javax.validation.Valid;
 
@@ -17,6 +18,9 @@ public class CardController {
 
     @Autowired
     CardRepository cardRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @PostMapping("/addcard")
     public ResponseEntity<Card> createCar(@Valid @RequestBody Card card) {

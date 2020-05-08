@@ -12,7 +12,6 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     private Long cardId;
 
     @JsonBackReference
