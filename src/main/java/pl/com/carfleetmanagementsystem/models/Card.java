@@ -1,5 +1,7 @@
 package pl.com.carfleetmanagementsystem.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
@@ -13,6 +15,7 @@ public class Card {
     @NotBlank
     private Long cardId;
 
+    @JsonBackReference
     @OneToOne(mappedBy = "card")
     private User user;
 
