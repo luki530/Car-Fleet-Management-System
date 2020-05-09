@@ -1,5 +1,8 @@
 package pl.com.carfleetmanagementsystem.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -14,12 +17,14 @@ public class Car {
     @JoinColumn(name = "ld_id", referencedColumnName = "id")
     private LoggerDevice loggerDevice;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "car")
     private Set<CarLog> carLogs;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "car")
     private Set<CarError> carError;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "car")
     private Set<Notification> notification;
 
@@ -29,11 +34,10 @@ public class Car {
 
     private boolean isBlocked;
 
-    public Car(Long id, String model, String plateNumber, boolean isBlocked) {
+    public Car(String model, String plateNumber, boolean isBlocked) {
         this.model = model;
         this.plateNumber = plateNumber;
         this.isBlocked = isBlocked;
-        this.id = id;
     }
 
     public Car(Long id) {
