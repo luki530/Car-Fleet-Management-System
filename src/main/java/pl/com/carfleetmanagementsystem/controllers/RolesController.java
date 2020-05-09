@@ -33,19 +33,19 @@ public class RolesController {
         Set<Role> roles = assignRoleRequest.getRoles();
 
         roles.forEach(role -> {
-            if ("admin".equals(role)) {
+            if ("admin".equals(role.toString())) {
                 Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN).orElseThrow(() -> new RoleNotFoundException(role.toString()));
                 roles.add(adminRole);
                 user.setRoles(roles);
-            } else if ("employee".equals(role)) {
+            } else if ("employee".equals(role.toString())) {
                 Role employeeRole = roleRepository.findByName(ERole.ROLE_EMPLOYEE).orElseThrow(() -> new RoleNotFoundException(role.toString()));
                 roles.add(employeeRole);
                 user.setRoles(roles);
-            } else if ("boss".equals(role)) {
+            } else if ("boss".equals(role.toString())) {
                 Role bossRole = roleRepository.findByName(ERole.ROLE_BOSS).orElseThrow(() -> new RoleNotFoundException(role.toString()));
                 roles.add(bossRole);
                 user.setRoles(roles);
-            } else if ("driver".equals(role)) {
+            } else if ("driver".equals(role.toString())) {
                 Role driverRole = roleRepository.findByName(ERole.ROLE_DRIVER).orElseThrow(() -> new RoleNotFoundException(role.toString()));
                 roles.add(driverRole);
                 user.setRoles(roles);
