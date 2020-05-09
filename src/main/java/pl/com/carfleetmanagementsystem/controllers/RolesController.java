@@ -27,7 +27,7 @@ public class RolesController {
     @Autowired
     UserRepository userRepository;
 
-    @PutMapping("/roles")
+    @PostMapping("/roles")
     public ResponseEntity<User> assignRoles(@Valid @RequestBody AssignRoleRequest assignRoleRequest) {
         User user = userRepository.findById(assignRoleRequest.getUserId()).orElseThrow(() -> new UserNotFoundException(assignRoleRequest.getUserId()));
         Set<Role> roles = assignRoleRequest.getRoles();
