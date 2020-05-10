@@ -16,5 +16,5 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
 
 	@Override
 	List<Role> findAll();
-
+//komentarz
 }
