@@ -10,6 +10,8 @@ import java.util.Optional;
 @Repository
 public interface CarLogsRepository extends JpaRepository<CarLog, Long> {
 
+    List<CarLog> findByCar_IdAndTimeBetween(Long id, Long timeFrom, Long timeTo);
+
     @Override
     Optional<CarLog> findById(Long id);
 

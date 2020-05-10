@@ -32,20 +32,26 @@ public class CarLogsController {
         return HttpStatus.FORBIDDEN;
     }
 
+    @GetMapping("/find/{carId}/{start}/{end}")
+    public ResponseEntity<List<CarLog>> find(@PathVariable("carId") Long id, @PathVariable("start") Long start, @PathVariable("end") Long end) {
+        return ResponseEntity.ok().body(carLogsRepository.findByCar_IdAndTimeBetween(id, start, end));
+    }
+
     @GetMapping("/findAll")
-    public ResponseEntity<List<CarLog>> findAllCarLogs(){
+    public ResponseEntity<List<CarLog>> findAllCarLogs() {
         List<CarLog> carLogs = carLogsRepository.findAll();
         return ResponseEntity.ok().body(carLogs);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CarLog> findById(@PathVariable("id") Long id){
+    public ResponseEntity<CarLog> findById(@PathVariable("id") Long id) {
         CarLog carLog = carLogsRepository.findById(id).orElseThrow(() -> new CarNotFoundException(id));
         return ResponseEntity.ok().body(carLog);
 
     }
+
     @PostMapping("/create")
-    public ResponseEntity<CarLog> createCarLogs(@Valid  @RequestBody CarLog carLog){
+    public ResponseEntity<CarLog> createCarLogs(@Valid @RequestBody CarLog carLog) {
         carAnalysersManager.analyseCarLog(carLog);
         return ResponseEntity.ok().body(carLogsRepository.save(carLog));
     }

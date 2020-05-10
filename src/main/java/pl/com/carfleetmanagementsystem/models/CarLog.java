@@ -18,7 +18,7 @@ public class CarLog {
     @JoinColumn(name = "car_id")
     private Car car;
 
-    private long time;
+    private Long time;
 
     private Double speed;
 
