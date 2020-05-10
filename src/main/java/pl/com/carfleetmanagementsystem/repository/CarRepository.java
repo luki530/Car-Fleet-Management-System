@@ -20,6 +20,4 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     @Override
     void delete(Car car);
 
-    @Override
-    List<Car> findAllById(Iterable<Long> iterable);
 }
