@@ -76,6 +76,10 @@ public class RolesController {
                 .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_NEW.toString()));
         roles.add(userRole);
 
+        if(strRoles.isEmpty()){
+            System.out.println("Google cloud");
+        }
+
         user.setRoles(roles);
         return ResponseEntity.ok().body(userRepository.save(user));
     }

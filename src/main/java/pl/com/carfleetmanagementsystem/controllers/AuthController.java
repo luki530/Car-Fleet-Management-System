@@ -172,7 +172,7 @@ public class AuthController {
 
         Set<Role> roles = new HashSet<>();
 
-        Role userRole = roleRepository.findByName(ERole.ROLE_NEW)
+        Role userRole = roleRepository.findByNameIgnoreCase(ERole.ROLE_NEW)
                 .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_NEW.toString()));
         roles.add(userRole);
 
