@@ -18,4 +18,6 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
 	List<Role> findAll();
 	//dodawanie komentarzy jest super ciekawe
 
+	@Override
+	Optional<Role> findById(Long id);
 }
