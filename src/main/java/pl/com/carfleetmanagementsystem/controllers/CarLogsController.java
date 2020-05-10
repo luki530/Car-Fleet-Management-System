@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/carlog")
 public class CarLogsController {
-
+//hagiographa
     @Autowired
     CarLogsRepository carLogsRepository;
 
