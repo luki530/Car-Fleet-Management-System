@@ -6,16 +6,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.com.carfleetmanagementsystem.errorhandler.exception.CarNotFoundException;
+import pl.com.carfleetmanagementsystem.errorhandler.exception.LoggerDeviceNotFoundException;
 import pl.com.carfleetmanagementsystem.errorhandler.exception.UserNotFoundException;
 import pl.com.carfleetmanagementsystem.http.request.AddCardRequest;
+import pl.com.carfleetmanagementsystem.http.request.AssignLoggerDeviceRequest;
 import pl.com.carfleetmanagementsystem.models.Car;
 import pl.com.carfleetmanagementsystem.models.Card;
+import pl.com.carfleetmanagementsystem.models.LoggerDevice;
 import pl.com.carfleetmanagementsystem.models.User;
 import pl.com.carfleetmanagementsystem.repository.CarRepository;
+import pl.com.carfleetmanagementsystem.repository.LoggerDeviceRepository;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -23,6 +28,9 @@ public class CarController {
 
     @Autowired
     CarRepository carRepository;
+
+    @Autowired
+    LoggerDeviceRepository loggerDeviceRepository;
 
     @DeleteMapping("/listofcars/{id}")
     public HttpStatus deleteCarById(@PathVariable("id") Long id) {
@@ -58,6 +66,14 @@ public class CarController {
         carUpdate.setPlateNumber(car.getPlateNumber());
         carUpdate.setBlocked(car.isBlocked());
         return ResponseEntity.ok().body(carRepository.save(carUpdate));
+    }
+
+    @PutMapping("/assignloggerdevice")
+    public ResponseEntity<Car> assignLoggerDevice(@Valid @RequestBody AssignLoggerDeviceRequest assignLoggerDeviceRequest) {
+        Car car = carRepository.findById(assignLoggerDeviceRequest.getCarId()).orElseThrow(() -> new CarNotFoundException(assignLoggerDeviceRequest.getCarId()));
+        LoggerDevice loggerDevice = loggerDeviceRepository.findBySerialNumber(assignLoggerDeviceRequest.getSerialNumber()).orElseThrow(() -> new LoggerDeviceNotFoundException(assignLoggerDeviceRequest.getSerialNumber()));
+        car.setLoggerDevice(loggerDevice);
+        return ResponseEntity.ok().body(carRepository.save(car));
     }
 
 }

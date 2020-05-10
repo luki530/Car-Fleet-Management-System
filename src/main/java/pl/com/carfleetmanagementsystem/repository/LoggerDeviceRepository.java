@@ -20,4 +20,6 @@ public interface LoggerDeviceRepository extends JpaRepository<LoggerDevice, Long
 
     @Override
     List<LoggerDevice> findAll();
+
+    Optional<LoggerDevice> findBySerialNumber(String serialNumber);
 }
