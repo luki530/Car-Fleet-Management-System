@@ -41,25 +41,25 @@ public class RolesController {
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
-                    case "ROLE_ADMIN":
+                    case "admin":
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                                 .orElseThrow(() -> new RoleNotFoundException(role));
                         roles.add(adminRole);
 
                         break;
-                    case "ROLE_EMPLOYEE":
+                    case "employee":
                         Role employeeRole = roleRepository.findByName(ERole.ROLE_EMPLOYEE)
                                 .orElseThrow(() -> new RoleNotFoundException(role));
                         roles.add(employeeRole);
 
                         break;
-                    case "ROLE_BOSS":
+                    case "boss":
                         Role bossRole = roleRepository.findByName(ERole.ROLE_BOSS)
                                 .orElseThrow(() -> new RoleNotFoundException(role));
                         roles.add(bossRole);
 
                         break;
-                    case "ROLE_DRIVER":
+                    case "driver":
                         Role driverRole = roleRepository.findByName(ERole.ROLE_DRIVER)
                                 .orElseThrow(() -> new RoleNotFoundException(role));
                         roles.add(driverRole);
