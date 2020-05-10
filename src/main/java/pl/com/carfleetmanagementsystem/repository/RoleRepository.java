@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import pl.com.carfleetmanagementsystem.models.ERole;
 import pl.com.carfleetmanagementsystem.models.Role;
+import pl.com.carfleetmanagementsystem.models.User;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
@@ -15,4 +16,6 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
 
 	@Override
 	List<Role> findAll();
+
+	Optional<Role> findByNameIgnoreCase(Long id);
 }
