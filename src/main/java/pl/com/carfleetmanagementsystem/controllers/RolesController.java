@@ -10,6 +10,7 @@ import pl.com.carfleetmanagementsystem.http.request.AssignRoleRequest;
 import pl.com.carfleetmanagementsystem.models.ERole;
 import pl.com.carfleetmanagementsystem.models.Role;
 import pl.com.carfleetmanagementsystem.models.User;
+import pl.com.carfleetmanagementsystem.repository.RoleRepository;
 import pl.com.carfleetmanagementsystem.repository.UserRepository;
 
 import javax.validation.Valid;

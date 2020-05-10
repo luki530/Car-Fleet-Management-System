@@ -1,7 +1,5 @@
 package pl.com.carfleetmanagementsystem.http.request;
 
-import pl.com.carfleetmanagementsystem.models.Role;
-
 import java.util.Set;
 
 public class AssignRoleRequest {
