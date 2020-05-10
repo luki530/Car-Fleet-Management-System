@@ -16,7 +16,6 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
 
 	@Override
 	List<Role> findAll();
-
-	Optional<Role> findByNameIgnoreCase(ERole name);
+	//dodawanie komentarzy jest super ciekawe
 
 }
