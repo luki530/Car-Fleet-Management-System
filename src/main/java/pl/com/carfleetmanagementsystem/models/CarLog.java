@@ -1,6 +1,7 @@
 package pl.com.carfleetmanagementsystem.models;
 
 import javax.persistence.*;
+
 //google cloud jest glupi
 @Entity
 @Table(name = "car_logs")
@@ -13,7 +14,7 @@ public class CarLog {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "driver_id")
     private User driver;
-//google cloud jest glupi
+    //google cloud jest glupi
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "car_id")
     private Car car;
@@ -24,7 +25,7 @@ public class CarLog {
 
     private Double acceleration;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "gl_id", referencedColumnName = "id")
     private Location gpsLocation;
 
@@ -74,6 +75,7 @@ public class CarLog {
     public void setAcceleration(Double acceleration) {
         this.acceleration = acceleration;
     }
+
     public User getDriver() {
         return driver;
     }
