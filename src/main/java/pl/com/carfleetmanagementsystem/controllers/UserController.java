@@ -2,11 +2,15 @@ package pl.com.carfleetmanagementsystem.controllers;
 
 import com.sun.mail.iap.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.com.carfleetmanagementsystem.errorhandler.exception.CarNotFoundException;
+import pl.com.carfleetmanagementsystem.errorhandler.exception.UserNotFoundException;
 import pl.com.carfleetmanagementsystem.http.response.MessageResponse;
+import pl.com.carfleetmanagementsystem.models.Car;
 import pl.com.carfleetmanagementsystem.models.User;
 import pl.com.carfleetmanagementsystem.repository.UserRepository;
 import pl.com.carfleetmanagementsystem.security.jwt.JwtUtils;
@@ -43,6 +47,13 @@ public class UserController {
     public ResponseEntity<User> id(Long id){
         User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException());
         return ResponseEntity.ok().body(user);
+    }
+
+    @DeleteMapping("/myprofile")
+    public HttpStatus deleteUserById(@PathVariable("id") Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        userRepository.delete(user);
+        return HttpStatus.FORBIDDEN;
     }
 
 }
