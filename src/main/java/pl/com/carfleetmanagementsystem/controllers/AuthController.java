@@ -33,7 +33,6 @@ import pl.digitalvirgo.justsend.api.client.services.impl.Constants;
 import pl.digitalvirgo.justsend.api.client.services.impl.MessageServiceImpl;
 import pl.digitalvirgo.justsend.api.client.services.impl.services.MessageService;
 
-import static pl.digitalvirgo.justsend.api.client.services.impl.enums.BulkVariant.PRO;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

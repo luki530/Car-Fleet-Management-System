@@ -49,7 +49,7 @@ public class UserController {
         return ResponseEntity.ok().body(user);
     }
 
-    @DeleteMapping("/myprofile")
+    @DeleteMapping("/userprofile/{id}")
     public HttpStatus deleteUserById(@PathVariable("id") Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         userRepository.delete(user);
