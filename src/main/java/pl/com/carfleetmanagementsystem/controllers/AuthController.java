@@ -31,6 +31,7 @@ import pl.com.carfleetmanagementsystem.security.services.EmailSenderService;
 import pl.com.carfleetmanagementsystem.security.services.UserDetailsImpl;
 import pl.digitalvirgo.justsend.api.client.services.impl.Constants;
 import pl.digitalvirgo.justsend.api.client.services.impl.MessageServiceImpl;
+import pl.digitalvirgo.justsend.api.client.services.impl.enums.BulkVariant;
 import pl.digitalvirgo.justsend.api.client.services.impl.services.MessageService;
 
 
@@ -193,7 +194,7 @@ public class AuthController {
         PhoneNumberConfirmationCode phoneNumberConfirmationCode = new PhoneNumberConfirmationCode();
         
         phoneNumberConfirmationCodeRepository.save(phoneNumberConfirmationCode);
-        messageService.sendMessage(user.getPhoneNumber(), "CFMS", "Your phone confirmation code: " + phoneNumberConfirmationCode.getConfirmationCode(), PRO);
+        messageService.sendMessage(user.getPhoneNumber(), "CFMS", "Your phone confirmation code: " + phoneNumberConfirmationCode.getConfirmationCode(), BulkVariant.PRO);
         user.setPhoneNumberConfirmationCode(phoneNumberConfirmationCode);
 
         userRepository.save(user);
