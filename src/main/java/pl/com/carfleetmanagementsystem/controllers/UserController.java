@@ -50,12 +50,12 @@ public class UserController {
     }
 
     @DeleteMapping("/myprofile")
-    public HttpStatus deleteAccount(@RequestHeader(name="Authorization") String token) {
+    public ResponseEntity.BodyBuilder deleteAccount(@RequestHeader(name="Authorization") String token) {
         token = token.substring(7);
         String username = jwtUtils.getUserNameFromJwtToken(token);
         User user = userRepository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException());
         userRepository.delete(user);
-        return HttpStatus.FORBIDDEN;
+        return ResponseEntity.status(200);
     }
 
     @DeleteMapping("/userprofile/{id}")
