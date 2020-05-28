@@ -73,7 +73,6 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "driver")
     private Set<Notification> notification;
 
-   //google cloud jest glupi bo nie chce zmienic wersji
 
 
     public User() {

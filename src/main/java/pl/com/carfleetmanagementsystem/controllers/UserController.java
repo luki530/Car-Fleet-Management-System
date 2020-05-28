@@ -37,7 +37,7 @@ public class UserController {
 
     @GetMapping("/myprofile")
     public ResponseEntity<User> user(@RequestHeader(name="Authorization") String token){
-        token=token.substring(7);
+        token = token.substring(7);
         String username = jwtUtils.getUserNameFromJwtToken(token);
         User user = userRepository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException());
         return ResponseEntity.ok().body(user);
@@ -47,6 +47,15 @@ public class UserController {
     public ResponseEntity<User> id(Long id){
         User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException());
         return ResponseEntity.ok().body(user);
+    }
+
+    @DeleteMapping("/myprofile")
+    public HttpStatus deleteAccount(@RequestHeader(name="Authorization") String token) {
+        token = token.substring(7);
+        String username = jwtUtils.getUserNameFromJwtToken(token);
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException());
+        userRepository.delete(user);
+        return HttpStatus.FORBIDDEN;
     }
 
     @DeleteMapping("/userprofile/{id}")
