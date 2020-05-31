@@ -14,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import pl.com.carfleetmanagementsystem.security.jwt.AuthEntryPointJwt;
 import pl.com.carfleetmanagementsystem.security.jwt.AuthTokenFilter;
 import pl.com.carfleetmanagementsystem.security.services.UserDetailsServiceImpl;

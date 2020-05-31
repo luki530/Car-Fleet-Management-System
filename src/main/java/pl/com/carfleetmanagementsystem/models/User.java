@@ -53,6 +53,11 @@ public class User {
 
     @JsonIgnore
     @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "pr_id", referencedColumnName = "id")
+    private PasswordResetToken passwordResetToken;
+
+    @JsonIgnore
+    @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "pnc_id", referencedColumnName = "id")
     private PhoneNumberConfirmationCode phoneNumberConfirmationCode;
 
@@ -72,9 +77,6 @@ public class User {
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "driver")
     private Set<Notification> notification;
-
-   //google cloud jest glupi bo nie chce zmienic wersji
-
 
     public User() {
     }
@@ -177,6 +179,14 @@ public class User {
 
     public void setPhoneNumberConfirmationCode(PhoneNumberConfirmationCode phoneNumberConfirmationCode) {
         this.phoneNumberConfirmationCode = phoneNumberConfirmationCode;
+    }
+
+    public PasswordResetToken getPasswordResetToken() {
+        return passwordResetToken;
+    }
+
+    public void setPasswordResetToken(PasswordResetToken passwordResetToken) {
+        this.passwordResetToken = passwordResetToken;
     }
 
     public Card getCard() {

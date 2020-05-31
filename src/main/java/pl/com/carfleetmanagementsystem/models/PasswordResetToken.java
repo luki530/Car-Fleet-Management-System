@@ -15,13 +15,11 @@ public class PasswordResetToken {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "passwordResetToken")
     private User user;
-
 
     public PasswordResetToken() {
     }
-
 
     public PasswordResetToken(User user) {
         this.user = user;

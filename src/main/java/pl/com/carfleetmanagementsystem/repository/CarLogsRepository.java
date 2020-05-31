@@ -20,4 +20,5 @@ public interface CarLogsRepository extends JpaRepository<CarLog, Long> {
 
     @Override
     List<CarLog> findAll();
+
 }
