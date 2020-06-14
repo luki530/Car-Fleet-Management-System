@@ -69,7 +69,7 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    private MessageService messageService = new MessageServiceImpl("JDJhJDEyJGRxWGlveW1Rd05xMzB0YVJhLjBpVHV6aFQ4a21JY3l6SEF4M0ZxTnZjLmFRcVVKVi9PbFhh");
+    private MessageService messageService = new MessageServiceImpl("JDJhJDEyJHBKeFdjNFJMcktndmVNOXQ5Qy9KaWVnTnNRMUx6bVpWaG9vWC51Q2dZbUlZZlk5dmtQNHlp");
 
     @Transactional
     @PostMapping("/cardlogin")
