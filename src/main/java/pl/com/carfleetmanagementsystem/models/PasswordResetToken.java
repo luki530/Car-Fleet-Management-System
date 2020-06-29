@@ -1,6 +1,7 @@
 package pl.com.carfleetmanagementsystem.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.UUID;
 
@@ -10,6 +11,8 @@ public class PasswordResetToken {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @NotBlank
     private String passwordResetToken;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -19,10 +22,6 @@ public class PasswordResetToken {
     private User user;
 
     public PasswordResetToken() {
-    }
-
-    public PasswordResetToken(User user) {
-        this.user = user;
         createdDate = new Date();
         passwordResetToken = UUID.randomUUID().toString();
     }

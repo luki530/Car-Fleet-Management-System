@@ -72,10 +72,6 @@ public class RolesController {
                 }
             });
         }
-        Role userRole = roleRepository.findByName(ERole.ROLE_NEW)
-                .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_NEW.toString()));
-        roles.add(userRole);
-
         user.setRoles(roles);
         return ResponseEntity.ok().body(userRepository.save(user));
     }

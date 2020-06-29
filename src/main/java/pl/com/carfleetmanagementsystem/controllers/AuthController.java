@@ -246,9 +246,9 @@ public class AuthController {
 
             User user = userRepository.findByUsername(resetPasswordRequest.getUsername()).orElseThrow(() -> new UsernameNotFoundException(resetPasswordRequest.getUsername()));
 
-            PasswordResetToken passwordResetToken = new PasswordResetToken(user);
-
-            passwordResetTokenRepository.save(passwordResetToken);
+            PasswordResetToken passwordResetToken = new PasswordResetToken();
+            user.setPasswordResetToken(passwordResetToken);
+            userRepository.save(user);
 
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(user.getEmail());
