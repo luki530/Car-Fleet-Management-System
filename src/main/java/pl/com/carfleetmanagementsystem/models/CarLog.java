@@ -2,7 +2,6 @@ package pl.com.carfleetmanagementsystem.models;
 
 import javax.persistence.*;
 
-//google cloud jest glupi
 @Entity
 @Table(name = "car_logs")
 public class CarLog {
@@ -14,7 +13,7 @@ public class CarLog {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "driver_id")
     private User driver;
-    //google cloud jest glupi
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "car_id")
     private Car car;

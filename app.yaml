@@ -1,8 +1,8 @@
 runtime: custom
 env: flex
-instance_class: B8
+instance_class: B1
 manual_scaling:
-  instances: 4
+  instances: 1
 handlers:
 - url: /.*
   secure: always
