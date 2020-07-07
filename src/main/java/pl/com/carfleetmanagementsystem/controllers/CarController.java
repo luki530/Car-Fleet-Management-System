@@ -69,11 +69,11 @@ public class CarController {
     }
 
     @PutMapping("/assignloggerdevice")
-    public ResponseEntity<Car> assignLoggerDevice(@Valid @RequestBody AssignLoggerDeviceRequest assignLoggerDeviceRequest) {
+    public ResponseEntity<?> assignLoggerDevice(@Valid @RequestBody AssignLoggerDeviceRequest assignLoggerDeviceRequest) {
         Car car = carRepository.findById(assignLoggerDeviceRequest.getCarId()).orElseThrow(() -> new CarNotFoundException(assignLoggerDeviceRequest.getCarId()));
         LoggerDevice loggerDevice = loggerDeviceRepository.findBySerialNumber(assignLoggerDeviceRequest.getSerialNumber()).orElseThrow(() -> new LoggerDeviceNotFoundException(assignLoggerDeviceRequest.getSerialNumber()));
-        car.setLoggerDevice(loggerDevice);
-        return ResponseEntity.ok().body(carRepository.save(car));
+        loggerDevice.setCar(car);
+        return ResponseEntity.ok().body(loggerDeviceRepository.save(loggerDevice));
     }
 
 }

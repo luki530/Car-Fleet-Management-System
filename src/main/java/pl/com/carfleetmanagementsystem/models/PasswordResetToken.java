@@ -1,5 +1,7 @@
 package pl.com.carfleetmanagementsystem.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
@@ -10,7 +12,7 @@ public class PasswordResetToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @NotBlank
     private String passwordResetToken;
@@ -18,7 +20,8 @@ public class PasswordResetToken {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @OneToOne(mappedBy = "passwordResetToken")
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     public PasswordResetToken() {
@@ -26,11 +29,11 @@ public class PasswordResetToken {
         passwordResetToken = UUID.randomUUID().toString();
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

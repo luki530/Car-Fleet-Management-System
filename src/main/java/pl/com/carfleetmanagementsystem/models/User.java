@@ -3,6 +3,7 @@ package pl.com.carfleetmanagementsystem.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Cascade;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -47,21 +48,19 @@ public class User {
     private boolean phoneNumberConfirmed = false;
 
     @JsonIgnore
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "ec_id", referencedColumnName = "id")
-    private EmailConfirmationToken emailConfirmationToken;
-
-    @JsonIgnore
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "pr_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "user", orphanRemoval = true)
     private PasswordResetToken passwordResetToken;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", orphanRemoval = true)
+    private EmailConfirmationToken emailConfirmationToken;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user", orphanRemoval = true)
     private PhoneNumberConfirmationCode phoneNumberConfirmationCode;
 
     @JsonManagedReference
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "c_id", referencedColumnName = "id")
     private Card card;
 

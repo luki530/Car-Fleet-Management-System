@@ -1,5 +1,7 @@
 package pl.com.carfleetmanagementsystem.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,8 +15,18 @@ public class LoggerDevice {
 
     private String simCardNumber;
 
-    @OneToOne(mappedBy = "loggerDevice")
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "car_id", referencedColumnName = "id")
     private Car car;
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
 
     public LoggerDevice(Long id, String serialNumber, String simCardNumber) {
         this.id = id;

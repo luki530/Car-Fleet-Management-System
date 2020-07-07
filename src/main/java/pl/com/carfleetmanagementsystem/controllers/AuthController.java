@@ -180,6 +180,7 @@ public class AuthController {
         userRepository.save(user);
 
         EmailConfirmationToken emailConfirmationToken = new EmailConfirmationToken();
+        emailConfirmationToken.setUser(user);
         emailConfirmationTokenRepository.save(emailConfirmationToken);
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(user.getEmail());
@@ -188,16 +189,14 @@ public class AuthController {
         mailMessage.setText("To confirm your email, please click here : "
                 + "https://www.carfleetmanagementsystem.pl/confirmemail?token=" + emailConfirmationToken.getConfirmationToken());
         emailSenderService.sendEmail(mailMessage);
-        user.setEmailConfirmationToken(emailConfirmationToken);
+
 
         Constants.JUSTSEND_API_URL = "https://justsend.pl/api/rest";
+
         PhoneNumberConfirmationCode phoneNumberConfirmationCode = new PhoneNumberConfirmationCode();
-        
+        phoneNumberConfirmationCode.setUser(user);
         phoneNumberConfirmationCodeRepository.save(phoneNumberConfirmationCode);
         messageService.sendMessage(user.getPhoneNumber(), "CFMS", "Your phone confirmation code: " + phoneNumberConfirmationCode.getConfirmationCode(), BulkVariant.PRO);
-        user.setPhoneNumberConfirmationCode(phoneNumberConfirmationCode);
-
-        userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
@@ -243,12 +242,18 @@ public class AuthController {
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@Valid @RequestBody ResetPasswordRequest resetPasswordRequest) {
         if (userRepository.existsByUsername(resetPasswordRequest.getUsername())) {
-
             User user = userRepository.findByUsername(resetPasswordRequest.getUsername()).orElseThrow(() -> new UsernameNotFoundException(resetPasswordRequest.getUsername()));
 
+            if(user.getPasswordResetToken()!=null){
+                PasswordResetToken resetToken = user.getPasswordResetToken();
+                passwordResetTokenRepository.delete(resetToken);
+            }
+
+
+
             PasswordResetToken passwordResetToken = new PasswordResetToken();
-            user.setPasswordResetToken(passwordResetToken);
-            userRepository.save(user);
+            passwordResetToken.setUser(user);
+            passwordResetTokenRepository.save(passwordResetToken);
 
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(user.getEmail());

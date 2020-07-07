@@ -13,8 +13,7 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ld_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "car")
     private LoggerDevice loggerDevice;
 
     @JsonIgnore
