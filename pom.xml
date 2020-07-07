@@ -45,11 +45,15 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!--zakomentuj lokalnie-->
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-gcp-starter-sql-mysql</artifactId>
             <version>1.2.2.RELEASE</version>
         </dependency>
+
+        <!--do tego miejsca-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
