@@ -57,8 +57,7 @@ public class User {
     private PasswordResetToken passwordResetToken;
 
     @JsonIgnore
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "pnc_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "user")
     private PhoneNumberConfirmationCode phoneNumberConfirmationCode;
 
     @JsonManagedReference

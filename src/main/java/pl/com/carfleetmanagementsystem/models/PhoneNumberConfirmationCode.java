@@ -11,7 +11,7 @@ public class PhoneNumberConfirmationCode {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @NotBlank
     private String confirmationCode;
@@ -19,7 +19,8 @@ public class PhoneNumberConfirmationCode {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @OneToOne(mappedBy = "phoneNumberConfirmationCode")
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     public PhoneNumberConfirmationCode() {
