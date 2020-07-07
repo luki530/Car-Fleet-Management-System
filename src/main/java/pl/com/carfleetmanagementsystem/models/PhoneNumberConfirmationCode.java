@@ -28,11 +28,11 @@ public class PhoneNumberConfirmationCode {
         confirmationCode = String.format("%04d", new Random().nextInt(10000));
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
