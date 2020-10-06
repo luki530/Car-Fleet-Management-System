@@ -5,16 +5,20 @@ Every vehicle has installed logging device which sends their current state (loca
 ## Functionalities
 
 <details><summary>Show</summary>
-  <p>
-    1. Login with 'remember me' function.
-    2. Registration with email and phone number verification.
-    3. Reset password.
-    4. Viewing user profile.
-    5. Autorization ( each role has its own permissions )
-    6. Listing, editing and deleting users. Assigning and changing roles.
-    7. Adding, listing, editing, deleting cars and logger devices. Assigning logger devices to cars.
-    8. 
-    </p>
+  <p>1. Login with 'remember me' function.</p>
+  <p>2. Registration with email and phone number verification.</p>
+  <p>3. Reset password.</p>
+  <p>4. Viewing user profile.</p>
+  <p>5. Autorization (each role has its own permissions).</p>
+  <p>6. Listing, editing and deleting users. Assigning and changing roles.</p>
+  <p>7. Adding, listing, editing, deleting cars and logger devices. Assigning logger devices to cars.</p>
+  <p>8. Displaying car location on the map.</p>
+  <p>9. Contact with developers through simple form.</p>
+  <p>10. Scalable and responsive website on any device.</p>
+  <p>11. Possibility to change theme and language.</p>
+  <p>12. Animation while moving between components.</p>
+  <p>13.
+  </p>
 </details>
 
 ## Technologies
@@ -23,43 +27,43 @@ Every vehicle has installed logging device which sends their current state (loca
   <p>
     
 ### Java
-Main back-end language.
-#### Maven
-Managing libraries used in project.
-#### SpringBoot
-Responsible for HTTP server.
-#### Jakarta Persistence Api (JPA)
-ORM standard
-##### Hibernate
-Framework for mapping Java objects to MySQL database.
-#### JSON Web Token (JWT)
-User authentication and autorization for application security. 
-#### JustSend SMS API
-Sending SMS to verify user phone number while registration.
+> Main back-end language.</p>
+>#### Maven
+>>Managing libraries used in project.
+>#### SpringBoot
+>>Responsible for HTTP server.
+>#### Jakarta Persistence Api (JPA)
+>>ORM standard
+>#### Hibernate
+>>Framework for mapping Java objects to MySQL database.
+>#### JSON Web Token (JWT)
+>>User authentication and autorization for application security. 
+>#### JustSend SMS API
+>>Sending SMS to verify user phone number while registration.
 ### MySQL
-Database service used to store objects.
+>Database service used to store objects.
 ### HTTP
-Application communication protocol.
+>Application communication protocol.
 ### Google Cloud Platform
-Front-end and back-end server hosting.
-#### App Engine
-Engine for running applications.
-#### Cloud SQL
-Hosting MySQL database.
-#### Cloud Build
-Dynamic and automatic code compilation and deployment after each push to master on GitHub.
-#### Google Maps
-View vehicle on map.
+>Front-end and back-end server hosting.
+>#### App Engine
+>>Engine for running applications.
+>#### Cloud SQL
+>>Hosting MySQL database.
+>#### Cloud Build
+>>Dynamic and automatic code compilation and deployment after each push to master on GitHub.
+>#### Google Maps
+>>View vehicle on map.
 ### Angular
-Main front-end technology.
-#### TypeScript
-Language used in Angular logic.
-#### HTML
-Display data in views.
-#### CSS
-Styling components.
-#### Angular Material
-Designing eye-friendly website.
+>>Main front-end technology.
+>#### TypeScript
+>>Language used in Angular logic.
+>#### HTML
+>>Display data in views.
+>#### CSS
+>>Styling components.
+>#### Angular Material
+>>Designing eye-friendly website.
   </p>
 </details>
 
@@ -69,17 +73,17 @@ Designing eye-friendly website.
   <p>
 
 ### IntelliJ
-Java IDE
+>Java IDE
 ### Visual Studio Code
-Angular IDE
+>Angular IDE
 ### Postman
-Sending raw http request. 
+>Sending raw http request. 
 ### Fiddler
-Catching http request to analyze.
+>Catching http request to analyze.
 ### GIT
-Used for team-development. 
-#### GitHub
-Choosen GIT hosting.
+>Used for team-development. 
+>#### GitHub
+>>Choosen GIT hosting.
 
 </p>
 </details>
