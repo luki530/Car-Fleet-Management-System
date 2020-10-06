@@ -3,6 +3,10 @@ It is an application that allows company (e.g. car rental, transport company etc
 ## How does it work ?
 Every vehicle has installed logging device which sends their current state (location, speed, acceleration, driver, fuel level, errors and other informations) to http server. Those logs are saved in database. They can be accessed by company employee via the website.
 ## Technologies
+
+<details><summary>Show</summary>
+  <p>
+    
 ### Java
 Main back-end language.
 #### Maven
@@ -41,7 +45,14 @@ Display data in views.
 Styling components.
 #### Angular Material
 Designing eye-friendly website.
+  </p>
+</details>
+
 ## Tools
+
+<details><summary>Show</summary>
+  <p>
+
 ### IntelliJ
 Java IDE
 ### Visual Studio Code
@@ -54,3 +65,6 @@ Catching http request to analyze.
 Used for team-development. 
 #### GitHub
 Choosen GIT hosting.
+
+</p>
+</details>
