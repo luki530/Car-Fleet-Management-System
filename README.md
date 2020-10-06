@@ -2,6 +2,21 @@
 It is an application that allows company (e.g. car rental, transport company etc.) to manage their fleet of vehicles. They can view logs of each car and driver. 
 ## How does it work ?
 Every vehicle has installed logging device which sends their current state (location, speed, acceleration, driver, fuel level, errors and other informations) to http server. Those logs are saved in database. They can be accessed by company employee via the website.
+## Functionalities
+
+<details><summary>Show</summary>
+  <p>
+    1. Login with 'remember me' function.
+    2. Registration with email and phone number verification.
+    3. Reset password.
+    4. Viewing user profile.
+    5. Autorization ( each role has its own permissions )
+    6. Listing, editing and deleting users. Assigning and changing roles.
+    7. Adding, listing, editing, deleting cars and logger devices. Assigning logger devices to cars.
+    8. 
+    </p>
+</details>
+
 ## Technologies
 
 <details><summary>Show</summary>
@@ -68,3 +83,5 @@ Choosen GIT hosting.
 
 </p>
 </details>
+
+
