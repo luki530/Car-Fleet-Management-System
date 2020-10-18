@@ -17,7 +17,6 @@ Every vehicle has installed logging device which sends their current state (loca
   <p>10. Scalable and responsive website on any device.</p>
   <p>11. Possibility to change theme and language.</p>
   <p>12. Animation while moving between components.</p>
-  <p>13.
   </p>
 </details>
 
