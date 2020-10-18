@@ -2,6 +2,12 @@
 It is an application that allows company (e.g. car rental, transport company etc.) to manage their fleet of vehicles. They can view logs of each car and driver. 
 ## How does it work ?
 Every vehicle has installed logging device which sends their current state (location, speed, acceleration, driver, fuel level, errors and other informations) to http server. Those logs are saved in database. They can be accessed by company employee via the website.
+
+##URLs
+[Deployed front-end](https://carfleetmanagementsystem.pl "CFMS front-end URL")
+[Back-end repository](https://github.com/luki530/Car-Fleet-Management-System "Back-end repository")
+[Front-end repository](https://github.com/luki530/Car-Fleet-Management-System-FRONTEND "Front-end repository")
+
 ## Functionalities
 
 <details><summary>Show</summary>
